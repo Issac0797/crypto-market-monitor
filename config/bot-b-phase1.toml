@@ -1,0 +1,54 @@
+mode = "market-risk"
+symbols = ["BTC/USDT", "ETH/USDT"]
+poll_seconds = 15
+max_age_ms = 30000
+max_gap_ms = 45000
+confirm_ms = 30000
+cooldown_ms = 900000
+
+[[rules]]
+window_ms = 900000
+threshold = "0.05"
+recovery = "0.025"
+
+[basis]
+threshold = "0.01"
+recovery = "0.005"
+confirm_ms = 60000
+max_skew_ms = 10000
+min_depth_usdt = "1000"
+
+[funding]
+threshold = "0.001"
+recovery = "0.0005"
+confirm_ms = 60000
+max_gap_ms = 180000
+
+[stablecoin]
+threshold = "0.005"
+recovery = "0.0025"
+confirm_ms = 60000
+min_depth_usd = "1000"
+
+
+# Local phase-one candidate only. Production config is unchanged.
+[usde]
+reference_usd = "1"
+threshold = "0.005"
+recovery = "0.0025"
+confirm_ms = 60000
+max_gap_ms = 45000
+max_age_ms = 30000
+max_skew_ms = 10000
+max_spread = "0.002"
+min_depth_usd = "1000"
+direct_venue = "kraken"
+direct_symbol = "USDE/USD"
+cross_venue = "kraken"
+cross_symbol = "USDE/USDT"
+conversion_venue = "bitstamp"
+conversion_symbol = "USDT/USD"
+fallback = true
+watch_timeout_seconds = 60
+retry_seconds = 5
+refresh_seconds = 21600

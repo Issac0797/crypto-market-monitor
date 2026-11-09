@@ -1,0 +1,672 @@
+{
+  "source_repository": "Issac0797/crypto-quant-lab",
+  "source_commit": "1ae8a6b66468fe09f3bf5e515ad9a0fc3f387b9e",
+  "date": "2026-11-09",
+  "files": [
+    {
+      "source": ".gitignore",
+      "destination": ".gitignore",
+      "source_sha256": "5798c68e447fcf470ee21cd64411a0d402cdcec4f4ba9fafbbeb8df18dd47085",
+      "destination_sha256": "5798c68e447fcf470ee21cd64411a0d402cdcec4f4ba9fafbbeb8df18dd47085",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "config/bot-b-phase1.toml",
+      "destination": "config/bot-b-phase1.toml",
+      "source_sha256": "320b1919f54698b5ee7796c8c56d7280228421cf54d56e121034d444119a51b0",
+      "destination_sha256": "320b1919f54698b5ee7796c8c56d7280228421cf54d56e121034d444119a51b0",
+      "kind": "moved"
+    },
+    {
+      "source": "config/bot-b-phase2-3.toml",
+      "destination": "config/bot-b-phase2-3.toml",
+      "source_sha256": "9cee084e6c47e92108667a800d7ea77680da0b8c6e53ae59f7e61c9e83b9cee3",
+      "destination_sha256": "9cee084e6c47e92108667a800d7ea77680da0b8c6e53ae59f7e61c9e83b9cee3",
+      "kind": "moved"
+    },
+    {
+      "source": "config/bot-b.toml",
+      "destination": "config/bot-b.toml",
+      "source_sha256": "d2e95e8bd0a1115f43132bbfbaa644fb8c793b05cefb1bce229418f3ead683db",
+      "destination_sha256": "d2e95e8bd0a1115f43132bbfbaa644fb8c793b05cefb1bce229418f3ead683db",
+      "kind": "moved"
+    },
+    {
+      "source": "deploy/install-bot-b.sh",
+      "destination": "deploy/install-bot-b.sh",
+      "source_sha256": "e83fae649e428f0c2dc28eb12f7ac3edcf954b676179ee5a843ace56a00da8aa",
+      "destination_sha256": "565eab64f5e5204fa89c3692da9175c87267c69b47576db60a00c935a2688104",
+      "kind": "moved"
+    },
+    {
+      "source": "deploy/rollback-bot-b.sh",
+      "destination": "deploy/rollback-bot-b.sh",
+      "source_sha256": "643091e0d814bf559597edc265cdfe79a88f09f31a26562651c179f43ca43b6b",
+      "destination_sha256": "03d43ffb14b19211ade714f569f7f88fc1119ed7dc1f4f19b6f3fa7c57a6a0da",
+      "kind": "moved"
+    },
+    {
+      "source": "deploy/systemd/cql-bot-b.service",
+      "destination": "deploy/systemd/cql-bot-b.service",
+      "source_sha256": "55ada64d5f74244764c0fd84cab83e11b059d5a0bfee7eccd28baca928c191fd",
+      "destination_sha256": "3d7b9ab08aeaa824ec946ef2f8525f0a281e8735e8d795aca0ac4e03fba4cf26",
+      "kind": "moved"
+    },
+    {
+      "source": "deploy/upgrade-bot-b.sh",
+      "destination": "deploy/upgrade-bot-b.sh",
+      "source_sha256": "0e6253a5ee078e1c3555fba907eb00c03a7d47a65f571f38a8de159593975aa2",
+      "destination_sha256": "136df6351c3e1edba24b8e57ea1e4919b59874aeffbc3d5343d54da853764f05",
+      "kind": "moved"
+    },
+    {
+      "source": "docs/bot-b-deployment.md",
+      "destination": "docs/bot-b-deployment.md",
+      "source_sha256": "fdaaf9cdc925e730b95d9c950c44fde179fa3df3e449e75672f0847221b2c2b1",
+      "destination_sha256": "fdaaf9cdc925e730b95d9c950c44fde179fa3df3e449e75672f0847221b2c2b1",
+      "kind": "moved"
+    },
+    {
+      "source": "docs/bot-b-market-notifications-2026-11-04.md",
+      "destination": "docs/bot-b-market-notifications-2026-11-04.md",
+      "source_sha256": "9f1c8ef1cba52f32ae6f161c71e854482872e5dc64b233d085d4854ccd841da9",
+      "destination_sha256": "9f1c8ef1cba52f32ae6f161c71e854482872e5dc64b233d085d4854ccd841da9",
+      "kind": "moved"
+    },
+    {
+      "source": "docs/bot-b-market-notifications-vps-2026-11-04.md",
+      "destination": "docs/bot-b-market-notifications-vps-2026-11-04.md",
+      "source_sha256": "1e5dad93969bba77c0b21c84b85bedd1fb5b4153d3ba0842de6e9be9bb5322af",
+      "destination_sha256": "1e5dad93969bba77c0b21c84b85bedd1fb5b4153d3ba0842de6e9be9bb5322af",
+      "kind": "moved"
+    },
+    {
+      "source": "docs/bot-b-okx-fix.md",
+      "destination": "docs/bot-b-okx-fix.md",
+      "source_sha256": "b2c2eebedae920191e94af43065bfe487a9bf7da808f42384c18cb7b454f9e4a",
+      "destination_sha256": "b2c2eebedae920191e94af43065bfe487a9bf7da808f42384c18cb7b454f9e4a",
+      "kind": "moved"
+    },
+    {
+      "source": "docs/bot-b-operations.md",
+      "destination": "docs/bot-b-operations.md",
+      "source_sha256": "1b68725ecc379744d6df98371266506a387ed0d4cdfa66d1ccaa10752cf4832d",
+      "destination_sha256": "1b68725ecc379744d6df98371266506a387ed0d4cdfa66d1ccaa10752cf4832d",
+      "kind": "moved"
+    },
+    {
+      "source": "docs/bot-b-phase1.md",
+      "destination": "docs/bot-b-phase1.md",
+      "source_sha256": "6a8e335c2d0feff44a3675a0e15e71d0f7d53a22564a658f529225b7e2bc1969",
+      "destination_sha256": "6a8e335c2d0feff44a3675a0e15e71d0f7d53a22564a658f529225b7e2bc1969",
+      "kind": "moved"
+    },
+    {
+      "source": "docs/bot-b-phase2-3.md",
+      "destination": "docs/bot-b-phase2-3.md",
+      "source_sha256": "96374ad03d30aeb7070a54433e66d5bc54eb346148b6ff3a31a24c88dc402c5b",
+      "destination_sha256": "96374ad03d30aeb7070a54433e66d5bc54eb346148b6ff3a31a24c88dc402c5b",
+      "kind": "moved"
+    },
+    {
+      "source": "docs/bot-b-server.md",
+      "destination": "docs/bot-b-server.md",
+      "source_sha256": "bdec825eecbdb59e3ad6039cdab3dedfb42f88ef1c5e716ac4174fbca3bebd01",
+      "destination_sha256": "bdec825eecbdb59e3ad6039cdab3dedfb42f88ef1c5e716ac4174fbca3bebd01",
+      "kind": "moved"
+    },
+    {
+      "source": "docs/bot-b-usdc-fix.md",
+      "destination": "docs/bot-b-usdc-fix.md",
+      "source_sha256": "6316a5b37778791a3f69c6f0782d44ff126c70c8b54d5fc7392c4ebca2bef876",
+      "destination_sha256": "6316a5b37778791a3f69c6f0782d44ff126c70c8b54d5fc7392c4ebca2bef876",
+      "kind": "moved"
+    },
+    {
+      "source": "docs/bot-b-usde-fix.md",
+      "destination": "docs/bot-b-usde-fix.md",
+      "source_sha256": "1af3c585ddf4d3cf1880acaf3091ed16368b07fd9d1e9b028b54f3e6ef4f7b8c",
+      "destination_sha256": "1af3c585ddf4d3cf1880acaf3091ed16368b07fd9d1e9b028b54f3e6ef4f7b8c",
+      "kind": "moved"
+    },
+    {
+      "source": "docs/dual-bot-setup.md",
+      "destination": "docs/dual-bot-setup.md",
+      "source_sha256": "af61cb2e8f2565c1d309dc3160ad251d580694e5f64e1bc2728e2a17fbf1cc53",
+      "destination_sha256": "beafd0fadd5677a3f17dfaae55b4bc4fad8fdfdf63242f09d70f1cc5c6b2a61c",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "docs/native-api-migration.md",
+      "destination": "docs/native-api-migration.md",
+      "source_sha256": "f814cbbc1ae0c1e2053420f1f2a9ea04bb68cd6c428d9dc0c8fafc550cb14b5f",
+      "destination_sha256": "f814cbbc1ae0c1e2053420f1f2a9ea04bb68cd6c428d9dc0c8fafc550cb14b5f",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "docs/telegram-notifications.md",
+      "destination": "docs/telegram-notifications.md",
+      "source_sha256": "e856b01595d8774e2afb47e3a8fbc46df4257d60133dabc510497fe5c56eeab9",
+      "destination_sha256": "71ebb922968f5c9a7747e4fca516ba970335315fee2fd9a00257b81b51a2b644",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "scripts/check-repository.py",
+      "destination": "scripts/check-repository.py",
+      "source_sha256": "79e281c491e6663b90a841a6f0d630832949f47da7401bc7b71ef2aa9675016e",
+      "destination_sha256": "79e281c491e6663b90a841a6f0d630832949f47da7401bc7b71ef2aa9675016e",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "scripts/deploy-bot-b-credential.ps1",
+      "destination": "scripts/deploy-bot-b-credential.ps1",
+      "source_sha256": "459552d1487ff048a8dec9d96fb084e7eaf7a8d775fd2311a64e22dd94e2f5ed",
+      "destination_sha256": "459552d1487ff048a8dec9d96fb084e7eaf7a8d775fd2311a64e22dd94e2f5ed",
+      "kind": "moved"
+    },
+    {
+      "source": "scripts/migrate-bot-b-config.py",
+      "destination": "scripts/migrate-bot-b-config.py",
+      "source_sha256": "00ef6fadb43a4a80b4fe910f0918c8e5f0a759c9a79dbc80f365790f841e0903",
+      "destination_sha256": "762689110badaef13c631103ce1927511e374912ac4f5c3eea1e84e96c156336",
+      "kind": "moved"
+    },
+    {
+      "source": "scripts/package-bot-b.py",
+      "destination": "scripts/package-bot-b.py",
+      "source_sha256": "539aa7903dd3632b0cff74f19028e5dbf3ee00b821110eb21911d7a1d23e25ca",
+      "destination_sha256": "ed3f66f5bf7ecf62fc8dddff4a704bdbcb870e361b01aaaed12b05ca7a84b025",
+      "kind": "moved"
+    },
+    {
+      "source": "scripts/read_telegram_target.py",
+      "destination": "scripts/read_telegram_target.py",
+      "source_sha256": "969ac81effa4e0033db3465556982e3e7ccb7f9bce4293889a905fc813101d76",
+      "destination_sha256": "969ac81effa4e0033db3465556982e3e7ccb7f9bce4293889a905fc813101d76",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "src/crypto_quant_lab/__init__.py",
+      "destination": "src/crypto_market_monitor/__init__.py",
+      "source_sha256": "1cdc44b9735f1696147a2e4e99507bbf19f7378dacd482c100f9ace3ba08ceb8",
+      "destination_sha256": "1cdc44b9735f1696147a2e4e99507bbf19f7378dacd482c100f9ace3ba08ceb8",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "src/crypto_quant_lab/adapters/__init__.py",
+      "destination": "src/crypto_market_monitor/adapters/__init__.py",
+      "source_sha256": "ecbfef50d1a482b457a92119e72283763263a8c7d8d3cbe1644d2dacb8912d75",
+      "destination_sha256": "ecbfef50d1a482b457a92119e72283763263a8c7d8d3cbe1644d2dacb8912d75",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "src/crypto_quant_lab/adapters/binance.py",
+      "destination": "src/crypto_market_monitor/adapters/binance.py",
+      "source_sha256": "7037144ccc51941d93d435345999441ec0dea45685fa2e941866161d76d67f52",
+      "destination_sha256": "c129549e51e7fdec0f10d5d89bff12f356cbf9fabb4c3258425ccc4ef0169bef",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "src/crypto_quant_lab/adapters/compact_bitstamp.py",
+      "destination": "src/crypto_market_monitor/adapters/compact_bitstamp.py",
+      "source_sha256": "c5e336b740c8ab3982c66abef262319b4c9db21e71c94f4492fbd6287f6c7465",
+      "destination_sha256": "83705f5c374eb5e41f45f4c8db492d51134b74063ed9129f79041502e0878c55",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "src/crypto_quant_lab/adapters/compact_bybit.py",
+      "destination": "src/crypto_market_monitor/adapters/compact_bybit.py",
+      "source_sha256": "f24a64285f0f1a02c6cc54643e769b6f823332c3abda3e2bd33e91140c49b8fa",
+      "destination_sha256": "b91ea4844c92593b7b70129f14dfc917f5134bf7716ee415bc971a50c8112e29",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "src/crypto_quant_lab/adapters/compact_kraken.py",
+      "destination": "src/crypto_market_monitor/adapters/compact_kraken.py",
+      "source_sha256": "bdb9ad331d6d67335a52c6c04bbac92910b0265da86a6bba279aaf97812c37d7",
+      "destination_sha256": "99ac1176450fa3c6fb4a05407bdb97b8bc02f1991aff9fd03a9241e552c02a9b",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "src/crypto_quant_lab/adapters/compact_okx.py",
+      "destination": "src/crypto_market_monitor/adapters/compact_okx.py",
+      "source_sha256": "41528d0d65448b7a6366db4bf297edf3f824964f6b1050190a1c520a30724027",
+      "destination_sha256": "5cc542344376e383610091bd98fedb0089405b10da11181ce3a74761cd35a2c8",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "src/crypto_quant_lab/adapters/native_client.py",
+      "destination": "src/crypto_market_monitor/adapters/native_client.py",
+      "source_sha256": "0b02a3e8f1933248f2039394dfca29a25e17bdd6ac7c9f47df230b7bad2b7486",
+      "destination_sha256": "6b98a4a69c67bfc3913dff88cd3771e03d02e254cfef9351fc16edb8ea201da3",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "src/crypto_quant_lab/adapters/native_http.py",
+      "destination": "src/crypto_market_monitor/adapters/native_http.py",
+      "source_sha256": "752b6db31751110cae640a873ee02f45bf2d426a51b89f41051f20c39837b0f1",
+      "destination_sha256": "d5a21f6cc41976d641e2c572a7665853cf4600018c08a98d17dededd817ecf45",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "src/crypto_quant_lab/adapters/native_markets.py",
+      "destination": "src/crypto_market_monitor/adapters/native_markets.py",
+      "source_sha256": "dd71b6238de3872cd84a5409570478e945e4cd8ab8cb1002f3d49e973b3f1c40",
+      "destination_sha256": "d8ad2e3c101a4e1cd8551e78fa17dbf1c288e92564e7f7594e2c1b114ac1763e",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "src/crypto_quant_lab/adapters/native_public.py",
+      "destination": "src/crypto_market_monitor/adapters/native_public.py",
+      "source_sha256": "bbc3d24c1c7232a16714b8f702bd8148d961eed6191ffbadbd821e4700531f4f",
+      "destination_sha256": "ef32adf30483f3a887722f886bfb3c0be0528eea86e490a2b3310d8c67ecbee0",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "src/crypto_quant_lab/adapters/native_streams.py",
+      "destination": "src/crypto_market_monitor/adapters/native_streams.py",
+      "source_sha256": "1dbab555feeec0e29705863633677a9871f7c4ce32c394c2d482397704c8ad0e",
+      "destination_sha256": "32aea3743bf6c3b2521f67506b544ad8847eaaabb42560c84f6722febe857bcf",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "src/crypto_quant_lab/adapters/okx_funding.py",
+      "destination": "src/crypto_market_monitor/adapters/okx_funding.py",
+      "source_sha256": "776d098c4e78bae511190f4e636306e25d906069e36fe25bafa61bd4d8477689",
+      "destination_sha256": "180e126caa4b4273bad5feae2525e9d65b31d5809a347321ce171eeaad3b2abd",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "src/crypto_quant_lab/bot_b_commands.py",
+      "destination": "src/crypto_market_monitor/bot_b_commands.py",
+      "source_sha256": "c2a9439afab911208951e8edfc1d00ffd2604286d66c5850832a475cfa76f7fa",
+      "destination_sha256": "63f1e08ec69ac2863dc14f4cd27cf47da10e3142bde0ea9908923125b7e44d96",
+      "kind": "moved"
+    },
+    {
+      "source": "src/crypto_quant_lab/bot_b_details.py",
+      "destination": "src/crypto_market_monitor/bot_b_details.py",
+      "source_sha256": "3407d0012f0a73a968dbcfa38446ebd74d69c35d41560aa35ec9136f5325b902",
+      "destination_sha256": "3407d0012f0a73a968dbcfa38446ebd74d69c35d41560aa35ec9136f5325b902",
+      "kind": "moved"
+    },
+    {
+      "source": "src/crypto_quant_lab/bot_b_lifecycle.py",
+      "destination": "src/crypto_market_monitor/bot_b_lifecycle.py",
+      "source_sha256": "081d1d738e60d958df80c68853437f5241b15d6ed9c617ec71b61d80daab1fd9",
+      "destination_sha256": "0f723ba9c1341891b067c00bbc443e758d7dab39f856710d04253ab228a45d66",
+      "kind": "moved"
+    },
+    {
+      "source": "src/crypto_quant_lab/bot_b_migrate.py",
+      "destination": "src/crypto_market_monitor/bot_b_migrate.py",
+      "source_sha256": "36ec31cca981a870666274f961e3f643ff5b7f0322aaf83d08d75d5378a5965d",
+      "destination_sha256": "4048e8b29aa9dbe04ae1f597885286ac29ccfb4b864e3cfb139d2601a11bfeb6",
+      "kind": "moved"
+    },
+    {
+      "source": "src/crypto_quant_lab/bot_b_policy.py",
+      "destination": "src/crypto_market_monitor/bot_b_policy.py",
+      "source_sha256": "3d6edac7785b58a201f28313c3dfe2cad5430fb34781f2c621a9c91dc5511afc",
+      "destination_sha256": "3d6edac7785b58a201f28313c3dfe2cad5430fb34781f2c621a9c91dc5511afc",
+      "kind": "moved"
+    },
+    {
+      "source": "src/crypto_quant_lab/bot_b_preflight.py",
+      "destination": "src/crypto_market_monitor/bot_b_preflight.py",
+      "source_sha256": "c55eb025a6eea0d98baef0e93d06ac05b0548079200ca9ba26318ed33b5bc129",
+      "destination_sha256": "89b9cfcad6f0b4cba69716abef7b1e40068504a14f6a1b15610808f044f63e90",
+      "kind": "moved"
+    },
+    {
+      "source": "src/crypto_quant_lab/bot_b_queue.py",
+      "destination": "src/crypto_market_monitor/bot_b_queue.py",
+      "source_sha256": "c33159bdbb061538ae71670a782217c1a0ba19c9b7ca1791c8d86e632f7d5c63",
+      "destination_sha256": "590e54a3779eef2d98b5c94d47a28520d25c00c0cd9919e7bb29a7d474e2b4aa",
+      "kind": "moved"
+    },
+    {
+      "source": "src/crypto_quant_lab/bot_b_templates.py",
+      "destination": "src/crypto_market_monitor/bot_b_templates.py",
+      "source_sha256": "1606d01b7f623c23ba8c09a804e4110a9f6b31642f47d1b59718157f5d698634",
+      "destination_sha256": "29af576be91124723b7a77118a6aac3a3978895233d224bbb6b9a5db071c1487",
+      "kind": "moved"
+    },
+    {
+      "source": "src/crypto_quant_lab/market_data/__init__.py",
+      "destination": "src/crypto_market_monitor/market_data/__init__.py",
+      "source_sha256": "5234c54b5700b021b6c6f84f265c4ed6de55b4504d96ea0407537bb581ad7bb0",
+      "destination_sha256": "5234c54b5700b021b6c6f84f265c4ed6de55b4504d96ea0407537bb581ad7bb0",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "src/crypto_quant_lab/market_data/bot_b_okx_books.py",
+      "destination": "src/crypto_market_monitor/market_data/bot_b_okx_books.py",
+      "source_sha256": "e01b15ed9bf7415eabd596b03f8e6dc0df57d26c79b21b2e22126d34034bc37f",
+      "destination_sha256": "741a621c2f2dc71c3df10e3895de6bc17cda025a2e235fdfb6d57189613c7196",
+      "kind": "moved"
+    },
+    {
+      "source": "src/crypto_quant_lab/market_data/contracts.py",
+      "destination": "src/crypto_market_monitor/market_data/contracts.py",
+      "source_sha256": "93d2f9466f93b0c979d9b5cf6ce3d015dfff482a8a7c492cb702ba73f7634685",
+      "destination_sha256": "eb70752383fb37a5d8974c3e6f45e708c24ba3e4eb8b98a33d35df6e93cee23d",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "src/crypto_quant_lab/market_data/derivative_watch.py",
+      "destination": "src/crypto_market_monitor/market_data/derivative_watch.py",
+      "source_sha256": "90584281f43413a98ee23a03a9907ee4c32d7dc0feff5854120d706b54cdcc56",
+      "destination_sha256": "791320c1dc464f76b76817fcb18b82a50c05ddbd4a90e23cf313930d996da2ff",
+      "kind": "moved"
+    },
+    {
+      "source": "src/crypto_quant_lab/market_data/funding_stream.py",
+      "destination": "src/crypto_market_monitor/market_data/funding_stream.py",
+      "source_sha256": "a31d532d8891a3ca0cccef9a8b0a5e605eee10daf6bcabb8fcddd63fcc00c132",
+      "destination_sha256": "41234ffc14e1e5b64b334375ac0b0b9de7654fc87984306291ffe5d4058dfc54",
+      "kind": "moved"
+    },
+    {
+      "source": "src/crypto_quant_lab/market_data/models.py",
+      "destination": "src/crypto_market_monitor/market_data/models.py",
+      "source_sha256": "20a99836e87671e34d803a1a0ab71d5eb5c2df4e0d0847bba165ce7d24923664",
+      "destination_sha256": "6a9a26a8a7274438b58545cafe16518ff2f3239a67382df9016ec9eda9f73733",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "src/crypto_quant_lab/market_data/risk_session.py",
+      "destination": "src/crypto_market_monitor/market_data/risk_session.py",
+      "source_sha256": "798ad78a3185b606c7cbf398d666a9f5433ea07e8468379abdb8aa3bec1afe5f",
+      "destination_sha256": "30968a07e3ad9ee6ab4abf134f9df6df43913f96cde88f2cb6f3c861a162b49b",
+      "kind": "moved"
+    },
+    {
+      "source": "src/crypto_quant_lab/market_data/risk_watch.py",
+      "destination": "src/crypto_market_monitor/market_data/risk_watch.py",
+      "source_sha256": "46d60c6908ab364c931c3c63f3a7c1c15940237f8b8b07c917a94b97b62994eb",
+      "destination_sha256": "416fc24bdd57611ceea927baafd8441ee2dd69c503311ec89cdda6d394cf0216",
+      "kind": "moved"
+    },
+    {
+      "source": "src/crypto_quant_lab/market_data/risk_watch_config.py",
+      "destination": "src/crypto_market_monitor/market_data/risk_watch_config.py",
+      "source_sha256": "4164a30c62bd7c74f808fdbab1bbc1c87cf1a6a09818a60b1c7c4e773f5afab3",
+      "destination_sha256": "e5e7fef311606c034882abf59023796cebd97b1ca5a8ff47b8ae75e5b5727a93",
+      "kind": "moved"
+    },
+    {
+      "source": "src/crypto_quant_lab/market_data/scanner.py",
+      "destination": "src/crypto_market_monitor/market_data/scanner.py",
+      "source_sha256": "fdd3544352c26dabd085ff06fc500d05cdc1b187ca5a83b5aa20c22d31e22442",
+      "destination_sha256": "7925048f58d8493e88ac31ec9ccdce25c49c3717f3293ba364f523343d9a2f4e",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "src/crypto_quant_lab/market_data/stablecoin_feed.py",
+      "destination": "src/crypto_market_monitor/market_data/stablecoin_feed.py",
+      "source_sha256": "43b78c8abbd40a465a7e076b8ac136e8ddb805b446cefcf16d44e071c494f713",
+      "destination_sha256": "84f6fcb4609fe3d704f15b88c1c926415f655edb283cbd004b6e70907e6ff3a5",
+      "kind": "moved"
+    },
+    {
+      "source": "src/crypto_quant_lab/market_data/stablecoin_watch.py",
+      "destination": "src/crypto_market_monitor/market_data/stablecoin_watch.py",
+      "source_sha256": "113cc3123253854699912351ff70f3edee815b3ae03b980240ce747db4d5b20c",
+      "destination_sha256": "0e6643bd028aacdbda330280359d6ded4ea4c056bc420ea4a5a07cbc3f6028fe",
+      "kind": "moved"
+    },
+    {
+      "source": "src/crypto_quant_lab/market_data/usde_config.py",
+      "destination": "src/crypto_market_monitor/market_data/usde_config.py",
+      "source_sha256": "912e15405606052cbb10122a34ba603ea81f330e4561c4edb0861d13f12e9856",
+      "destination_sha256": "bfce9b2b7e51bfb988d9949ec486ed1bff4b3f43aeb075449271b2d25388c1b0",
+      "kind": "moved"
+    },
+    {
+      "source": "src/crypto_quant_lab/market_data/usde_feed.py",
+      "destination": "src/crypto_market_monitor/market_data/usde_feed.py",
+      "source_sha256": "93a603b1e604bf740555cdb4b19aac96173c8426faa4810f2dbe69d5b9e9fc2e",
+      "destination_sha256": "87b70b398ee80e74d2819b92a5b47480936c633136b6363b862ebd14507bd8fb",
+      "kind": "moved"
+    },
+    {
+      "source": "src/crypto_quant_lab/market_data/usde_watch.py",
+      "destination": "src/crypto_market_monitor/market_data/usde_watch.py",
+      "source_sha256": "493e88d99967601acfdd668175d474043797ca2f2264b6f2a3ea36e12f364fa0",
+      "destination_sha256": "bd9681f04eb9e9040aec601108e2c65b2bbb6478bf73552045042aeaaded6118",
+      "kind": "moved"
+    },
+    {
+      "source": "src/crypto_quant_lab/market_data/venues.py",
+      "destination": "src/crypto_market_monitor/market_data/venues.py",
+      "source_sha256": "e8a2ac68380227c99857e78f561e5415e582638bb19bd413d48556d336e60ff8",
+      "destination_sha256": "e8a2ac68380227c99857e78f561e5415e582638bb19bd413d48556d336e60ff8",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "src/crypto_quant_lab/models.py",
+      "destination": "src/crypto_market_monitor/models.py",
+      "source_sha256": "583e4b84f6eb0f4caecf9e045ffa994eb66ea4534ed9162011645c95bab47889",
+      "destination_sha256": "583e4b84f6eb0f4caecf9e045ffa994eb66ea4534ed9162011645c95bab47889",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "src/crypto_quant_lab/notification_events.py",
+      "destination": "src/crypto_market_monitor/notification_events.py",
+      "source_sha256": "5ccafc63daad83cb1c1e4276ff72fdca246c8ec83f46440df0aa62e7cf7fb189",
+      "destination_sha256": "5ccafc63daad83cb1c1e4276ff72fdca246c8ec83f46440df0aa62e7cf7fb189",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "src/crypto_quant_lab/notification_store.py",
+      "destination": "src/crypto_market_monitor/notification_store.py",
+      "source_sha256": "4a6909c7c005fd7937b64019a20ff93dec616342f58bc0add980126e82e81033",
+      "destination_sha256": "33d7f3e240edf426cd033aec283dcb6d79a1fb68d8ba9a208688f8bd45df51cf",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "src/crypto_quant_lab/notifications.py",
+      "destination": "src/crypto_market_monitor/notifications.py",
+      "source_sha256": "cea024200d1d141f000c68e1123713290b54de6a1c40ec1979fdc5c9c8351240",
+      "destination_sha256": "47333b762ee7f55a52c66a47af424bb943283ace75c95214ac9b6ff2dd8caa8c",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "src/crypto_quant_lab/operations.py",
+      "destination": "src/crypto_market_monitor/operations.py",
+      "source_sha256": "ed8f58e6d1a9ec4336fa65ada9155dc556c3da60fb1045b9c1bbb3cf03f89265",
+      "destination_sha256": "ed8f58e6d1a9ec4336fa65ada9155dc556c3da60fb1045b9c1bbb3cf03f89265",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "src/crypto_quant_lab/risk_watch_backup.py",
+      "destination": "src/crypto_market_monitor/risk_watch_backup.py",
+      "source_sha256": "cba9b28e4a6b54e4502953b2896922816007875867e220e54e66b5780b35515a",
+      "destination_sha256": "0ae13937a40965c48e29918cfc259b5a1f6ed074dca855429d551d408ab0d3a2",
+      "kind": "moved"
+    },
+    {
+      "source": "src/crypto_quant_lab/risk_watch_cli.py",
+      "destination": "src/crypto_market_monitor/risk_watch_cli.py",
+      "source_sha256": "d3b620120689fe6f989cae0edb5e1930ac393677ba3baa1173115f96a87c6ea4",
+      "destination_sha256": "b0fd4cca9495fb4f1c3098c071eeacb22b627d599dd13ec678158f8680366ae2",
+      "kind": "moved"
+    },
+    {
+      "source": "src/crypto_quant_lab/telegram_transport.py",
+      "destination": "src/crypto_market_monitor/telegram_transport.py",
+      "source_sha256": "95234d956ff54b0aa5568b839358ee49ba31ed48f5920b65cdef8570c8e548f6",
+      "destination_sha256": "95234d956ff54b0aa5568b839358ee49ba31ed48f5920b65cdef8570c8e548f6",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "tests/conftest.py",
+      "destination": "tests/conftest.py",
+      "source_sha256": "52d7969a14e48daf413aa5557c3d3d7f1f1415d4ac8cccfb4ac64ed1602b46d1",
+      "destination_sha256": "4cee6f7e20289b9685fd5a46af8684359be66e6421c772ddfbf56d6e7efd216e",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "tests/test_adapter.py",
+      "destination": "tests/test_adapter.py",
+      "source_sha256": "fe860d4e4cd6b92e159ece3c3ad2e8d40d3cd6182301d1183f55beeea3a4204c",
+      "destination_sha256": "2b4a0299069a0dd82c7b3f79ba98f4393a579ac77d71f47d67be14dd6be59538",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "tests/test_bot_b_market_only.py",
+      "destination": "tests/test_bot_b_market_only.py",
+      "source_sha256": "1899c3a9b43b0b798fb8bc618508e96e801d0dae5592ea2083b3e657fb2b2bee",
+      "destination_sha256": "14334b625c8b8825f74d679897b257a396bd1ea39d25bbc3cc13edf5a88d450f",
+      "kind": "moved"
+    },
+    {
+      "source": "tests/test_bot_b_okx_reliability.py",
+      "destination": "tests/test_bot_b_okx_reliability.py",
+      "source_sha256": "bd1f7971dc2046305a1e3aa967eab3cbe5369cf4078a502fd51139f22ac4d5a7",
+      "destination_sha256": "63c757bd2adcaf1f9533d3d4ea2174f034081485824f02e3d744c382301c9897",
+      "kind": "moved"
+    },
+    {
+      "source": "tests/test_bot_b_phase1.py",
+      "destination": "tests/test_bot_b_phase1.py",
+      "source_sha256": "6e311879aaa7f4070e87b9e7394cc1d4b2b4d00a1501fc12c08a7687da9bb12a",
+      "destination_sha256": "0a6b67ae75b8cfc0e6a026595c82fd8dfdc006f9bb0c89ccfc0f5382fd628663",
+      "kind": "moved"
+    },
+    {
+      "source": "tests/test_bot_b_reliability.py",
+      "destination": "tests/test_bot_b_reliability.py",
+      "source_sha256": "3a894f21fbf34df1178a789022d90173d72b63275d9507908ca8660901b986cc",
+      "destination_sha256": "335a7bb4144c8787142a409fe8d0f7f045c839466bf734c37f63e28764b3d615",
+      "kind": "moved"
+    },
+    {
+      "source": "tests/test_derivative_watch.py",
+      "destination": "tests/test_derivative_watch.py",
+      "source_sha256": "a6c8ed29878b26cc09cc48dc5d86eb629c4034af5b17ee1289fbab3f137b2f39",
+      "destination_sha256": "da51de9c5787c32492607a7c4a2862dbbe30a39c55e1d08714104661d503c2b0",
+      "kind": "moved"
+    },
+    {
+      "source": "tests/test_native_api.py",
+      "destination": "tests/test_native_api.py",
+      "source_sha256": "37b603d87f0ff37215f1d84dde3720d9f2de7fe6563cc600aea8216bf3647c2e",
+      "destination_sha256": "02ac23f8b9bdc0b3c10a96ddafa66240e2e31bc9cee22eb96f07704dea7c336c",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "tests/test_repository_guard.py",
+      "destination": "tests/test_repository_guard.py",
+      "source_sha256": "e1db0d60743a127f96e1e0449989c4fea85cab62bc74dac826ddd10586671dd2",
+      "destination_sha256": "e1db0d60743a127f96e1e0449989c4fea85cab62bc74dac826ddd10586671dd2",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "tests/test_risk_watch.py",
+      "destination": "tests/test_risk_watch.py",
+      "source_sha256": "754d1cdafe82cbd579a3a785324be7ce4c213f7d54421ec359bba448c771f4e3",
+      "destination_sha256": "1fad994c14cea5123ddfd5ac544127b605960e3db0ccec7f2d0f9b9161534d7d",
+      "kind": "moved"
+    },
+    {
+      "source": "tests/test_stablecoin_feed_isolation.py",
+      "destination": "tests/test_stablecoin_feed_isolation.py",
+      "source_sha256": "7fce644607eeba6c8e7c14b34de01497d5ffe7f49b21420b1731eca73ae9a964",
+      "destination_sha256": "b52bfd77369ab4cb15f167c38e9131d214d9283ea6dfb4ac2a0e2f313f9d1cfb",
+      "kind": "moved"
+    },
+    {
+      "source": "tests/test_stablecoin_watch.py",
+      "destination": "tests/test_stablecoin_watch.py",
+      "source_sha256": "4053ea0d468a888d02fe7a165e027f5dcf5a917b86731932b777315389f1ebd9",
+      "destination_sha256": "53b986cb2f564bd149bea9d4dbe9476cc51bd911ce4270d3a4e9208d82f4ec53",
+      "kind": "moved"
+    },
+    {
+      "source": "tests/test_telegram_launcher.py",
+      "destination": "tests/test_telegram_launcher.py",
+      "source_sha256": "fd67a18c50e19fed52d36ed51647525a17b0e8edb373ad2af3d076c6235438b9",
+      "destination_sha256": "fd67a18c50e19fed52d36ed51647525a17b0e8edb373ad2af3d076c6235438b9",
+      "kind": "shared-copy"
+    },
+    {
+      "source": "tests/test_usdc_reliability.py",
+      "destination": "tests/test_usdc_reliability.py",
+      "source_sha256": "1465af2e8d4e1ed482501385088ef9b9f7b2d086fdb19b98bd09a58089c42e64",
+      "destination_sha256": "359f0469d744fd97683f5ffff5e5e1a4e428311d10de347d08d7d647a3321477",
+      "kind": "moved"
+    },
+    {
+      "source": "tests/test_usde_composite_time.py",
+      "destination": "tests/test_usde_composite_time.py",
+      "source_sha256": "dc439a006987a00b6ffc1560d4b0ef3639746e5acb5c86e8b9ddf62857b3d2be",
+      "destination_sha256": "371ebe5711de157197597244f1818839d2dc85e397e1584758e65a510f1cb890",
+      "kind": "moved"
+    },
+    {
+      "source": "tests/test_usde_sources.py",
+      "destination": "tests/test_usde_sources.py",
+      "source_sha256": "676574ee1692fe56bfb6c35cbdb0886dac3491bffd8719182feea2ae943ec0fb",
+      "destination_sha256": "2c3d039c865cf07ce106c3935f9b1a0fc6ae93ead6299471c59a35917723ecca",
+      "kind": "moved"
+    },
+    {
+      "source": "src/crypto_quant_lab/dual_bot_cli.py",
+      "destination": "src/crypto_market_monitor/bot_cli.py",
+      "kind": "shared-extract",
+      "source_sha256": "604d8c004550ce8744381888880428cbc8f8d64467557defd6bf23fb94ab8ebe",
+      "destination_sha256": "cfaffcce0c3b33147647e3d508ff2c9edbb84f377a0879160156bd9441de227b"
+    },
+    {
+      "source": "src/crypto_quant_lab/cli.py",
+      "destination": "src/crypto_market_monitor/logging_setup.py",
+      "kind": "shared-extract",
+      "source_sha256": "490d00a6702f7b35f2b7a81f83afa7296c6fec52ce17095f105820ef3a342588",
+      "destination_sha256": "4190cec6a9a72be2901ed0c16e6652eb55ae85f5c04356e9000f7f73b7c141ed"
+    },
+    {
+      "source": "src/crypto_quant_lab/service_cli.py",
+      "destination": "src/crypto_market_monitor/systemd_notify.py",
+      "kind": "shared-extract",
+      "source_sha256": "03a72c6e3e7bbe7efb8c81660fbf525d1dd6e804a030088c44755a1e594be667",
+      "destination_sha256": "f5f2c93594b955c09588b91d88700c5651c770629d23db22b3cfa80b93d21994"
+    },
+    {
+      "source": "tests/test_dual_engine_bots.py",
+      "destination": "tests/test_bot_connection.py",
+      "kind": "split",
+      "source_sha256": "d5dbc08a776453851d7c42d6d26ca62023214e6375287fc35246c97bd592ec65",
+      "destination_sha256": "0ab47a9a225013d804fdc32012bc8057c7ef778e92d0db3ff1b01796343f1250"
+    },
+    {
+      "source": "scripts/telegram-bots.ps1",
+      "destination": "scripts/telegram-bots.ps1",
+      "kind": "split",
+      "source_sha256": "d9809951e5c67ccfc2c2e244d58a39ce0e0679a406ae4da81d1e5a0fd7ebe24d",
+      "destination_sha256": "36fb5aaab959aa456fc074dff278a8200ef2d4fad8f171a30a5f76f85f588216"
+    },
+    {
+      "source": ".gitattributes",
+      "destination": ".gitattributes",
+      "kind": "shared-copy",
+      "source_sha256": "bbd02a3719694b9da8722ceec2df6483d344647d211d34c2fe39e4235e63529a",
+      "destination_sha256": "0eeb17cad7812fcd4583ef8d3c932ad4895b4812c914bf63271b8fb1bf974f8e",
+      "changes": "Preserve exact public config bytes across Git checkout and platform line endings"
+    },
+    {
+      "source": "docs/market-monitor-proposals.md",
+      "destination": "docs/market-monitor-proposals.md",
+      "source_sha256": "21a7e7a71fa26b0b2b896a289fb62f5c99c0c2a67b0956a899c1aa6514afc445",
+      "destination_sha256": "21a7e7a71fa26b0b2b896a289fb62f5c99c0c2a67b0956a899c1aa6514afc445",
+      "kind": "moved"
+    }
+  ],
+  "verification": {
+    "runtime_and_test_ast_equivalent_after_namespace_rewrite": 64,
+    "public_configs_byte_identical": 3,
+    "production_changed": false,
+    "runtime_state_or_credentials_copied": false
+  }
+}
