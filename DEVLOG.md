@@ -1,5 +1,39 @@
 # 开发记录
 
+## 2026-11-09：README 双语使用与部署说明
+
+用户要求 README 将机器人公开名称统一为 Bot，介绍监控事件与功能，
+并为其他使用者补充下载、安装、使用和部署说明。未修改运行代码、阈值、
+配置字节、配置指纹、事件 ID 或 SQLite 状态。
+
+README 现分为简体中文和 English 两部分，包含：
+
+- Bot 的公开数据边界、确定性规则和可选通知概述。
+- BTC/ETH 快速涨跌、现货/永续基差、预计资金费、USDT/USDC、USDe
+  及数据质量异常事件表。
+- 事件状态、持久化、通知队列、只读命令和单次检查等功能说明。
+- `git clone`/GitHub ZIP、虚拟环境安装、首次 `--once`、常驻运行、
+  可选 Telegram 和 Linux systemd stage/activate 部署入口。
+
+公开名称在 README 中统一为 Bot；为保持兼容性，现有配置文件、脚本路径、
+环境变量和部署目录中的历史标识未重命名。使用说明明确真实 Token/Chat ID
+只保存于受限环境文件，不进入 README、Git、日志或公开配置。
+部署说明标明安装器模板配置与 `config/bot-b-phase2-3.toml` 的差异，
+并要求已有状态目录先走配置指纹迁移流程。
+
+实际验证：
+
+- README 名称检查：`Bot B`/`BotB`/`bot B`/`botB` 均未出现；
+  所列本地许可证和文档链接存在。
+- `-m pytest -q --basetemp .test-tmp/readme-final-full --tb=short`：
+  241 passed in 66.05s，无 skip。
+- `-m ruff check .`、`-m ruff format --check .`通过，90 files formatted。
+- `scripts/check-repository.py`：105 files、0 findings；`git diff --check`通过。
+
+本轮没有执行公共行情网络检查、Telegram 发送、SSH/VPS 操作或服务启停；
+README 中的 systemd 命令是部署说明，不表示已在任何主机执行。
+下一验收是将 README 流程在独立主机按 stage 结果审阅，再决定是否激活。
+
 ## 2026-11-09：GitHub 开源发布
 
 用户明确授权新建与项目同名的 GitHub 开源仓库，并要求不泄露服务器密钥。
