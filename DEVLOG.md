@@ -1,6 +1,6 @@
 # 开发记录
 
-## 2026-11-09：GitHub 开源发布准备
+## 2026-11-09：GitHub 开源发布
 
 用户明确授权新建与项目同名的 GitHub 开源仓库，并要求不泄露服务器密钥。
 目标为 `Issac0797/crypto-market-monitor`，名称沿用 Python 发行名。
@@ -31,10 +31,21 @@ GitHub 连接器与本机 Git 认证账户一致；目标仓库查询返回 404�
 - `.venv/`、`.test-tmp/`、`data/`、`.env`、私钥文件、凭据 JSON 和
   DPAPI 配置样例路径均由 Git 忽略。
 
-下一步核验实际 Git 索引后提交，创建公开仓库并仅推送当前源码分支，
-再核对远端提交、公开可见性和许可证识别。规则扫描存在覆盖范围限制，
+实际索引 `scripts/check-repository.py --staged`：105 files、0 findings；
+`git diff --cached --check` 通过，提交 `3c9d7aa`。
+GitHub API 创建公开仓库 `Issac0797/crypto-market-monitor`，
+`git remote add origin https://github.com/Issac0797/crypto-market-monitor.git`
+及 `git -c credential.interactive=never push -u origin master` 成功。
+使用未认证 GitHub API 复核 visibility=public、private=false、
+default_branch=master、许可证 SPDX=MIT，远端 master 与本地
+`3c9d7aacedc2acb4d0202159b4029335469becc7` 一致；
+`git ls-remote origin refs/heads/master` 交叉核验一致，工作区干净。
+随后仅补记本发布结果与路线完成状态，并单独提交同步。
+
+规则扫描存在覆盖范围限制，
 不将其表述为对任意形式秘密的绝对保证。本次不采集行情、不发送 Telegram，
 不执行 SSH/VPS 操作，不迁移凭据或切换生产。
+下一项验收仍为另行审批后的 VPS 隔离验证与生产切换；此次未运行远端 CI。
 
 ## 2026-11-09：独立迁入 Bot B
 
