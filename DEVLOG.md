@@ -12,6 +12,8 @@ README 现分为简体中文和 English 两部分，包含：
 - BTC/ETH 快速涨跌、现货/永续基差、预计资金费、USDT/USDC、USDe
   及数据质量异常事件表。
 - 事件状态、持久化、通知队列、只读命令和单次检查等功能说明。
+- Telegram 查询命令表：`/status`、`/risks`、`/history`、`/settings` 的用途、
+  绑定 Chat ID 授权、只读边界和单轮询实例要求。
 - `git clone`/GitHub ZIP、虚拟环境安装、首次 `--once`、常驻运行、
   可选 Telegram 和 Linux systemd stage/activate 部署入口。
 
@@ -27,6 +29,9 @@ README 现分为简体中文和 English 两部分，包含：
   所列本地许可证和文档链接存在。
 - `-m pytest -q --basetemp .test-tmp/readme-final-full --tb=short`：
   241 passed in 66.05s，无 skip。
+- 补充 Telegram 查询命令后再次运行
+  `-m pytest -q --basetemp .test-tmp/readme-commands-full --tb=short`：
+  241 passed in 40.93s；Ruff、格式检查和仓库守卫均通过。
 - `-m ruff check .`、`-m ruff format --check .`通过，90 files formatted。
 - `scripts/check-repository.py`：105 files、0 findings；`git diff --check`通过。
 

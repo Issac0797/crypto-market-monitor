@@ -107,6 +107,23 @@ $env:CQL_TELEGRAM_B_ALLOWED_CHAT_IDS = "YOUR_CHAT_ID"
 不得写入 README、Git、日志或公开配置。详细配置见
 [Telegram 配置](docs/dual-bot-setup.md)。
 
+### Telegram 查询命令
+
+当 `[reliability] commands = true`、显式传入 `--telegram` 且 Bot 常驻运行时，
+绑定 Chat ID 可使用以下只读命令：
+
+| 命令 | 返回内容 |
+| --- | --- |
+| `/status` | 总体健康状态、健康快照年龄、现货/基差、稳定币、USDe 和各资金费源状态 |
+| `/risks` | 当前 active、待确认或 `DATA_STALE` 的风险，最多显示 15 项 |
+| `/history` | 最近 5 条非命令回复的风险或状态事件 |
+| `/settings` | 当前启用的价格、基差、资金费、稳定币和 USDe 阈值，以及发送重试上限和冷却时间 |
+
+Bot 只响应绑定 Chat ID 发来的新消息；其他 Chat ID 不会获得查询结果。
+命令仅读取 `health.json`、SQLite 状态和当前内存中的配置，不支持启停服务、修改配置、触发通知或交易。
+未知命令会返回支持的命令列表。启用 Telegram 时必须保持单轮询实例，避免同一 Token
+出现多个 `getUpdates` 所有者。
+
 ### Linux systemd 部署
 
 先构建只包含源码、公开配置和部署材料的发布包：
@@ -251,6 +268,25 @@ $env:CQL_TELEGRAM_B_ALLOWED_CHAT_IDS = "YOUR_CHAT_ID"
 Keep real Tokens and Chat IDs only in a restricted local environment file or process
 environment. Never write them to the README, Git, logs, or public configuration.
 See [Telegram setup](docs/dual-bot-setup.md) for details.
+
+### Telegram Query Commands
+
+When `[reliability] commands = true`, `--telegram` is explicitly supplied, and the Bot
+runs continuously, the bound Chat ID can use these read-only commands:
+
+| Command | Response |
+| --- | --- |
+| `/status` | Overall health, health-snapshot age, spot/basis, stablecoin, USDe, and funding-feed statuses |
+| `/risks` | Active, pending, or `DATA_STALE` risks, limited to 15 entries |
+| `/history` | The five most recent non-command risk or status events |
+| `/settings` | Enabled price, basis, funding, stablecoin, and USDe thresholds, plus retry limit and cooldown |
+
+The Bot responds only to new messages from the bound Chat ID; other Chat IDs receive no results.
+The commands read `health.json`, SQLite state, and the active in-memory configuration only.
+They cannot start or stop the service,
+change configuration, trigger notifications, or trade. An unknown command returns the supported
+command list. Keep exactly one polling instance when Telegram is enabled; never create multiple
+`getUpdates` owners for the same Token.
 
 ### Linux systemd Deployment
 
