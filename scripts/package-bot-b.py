@@ -21,6 +21,7 @@ def main() -> None:
             *root.glob("src/**/*.py"),
             root / "pyproject.toml",
             root / "README.md",
+            root / "LICENSE",
             *root.glob("config/bot-b*.toml"),
             root / "AGENTS.md",
             root / "ROADMAP.md",

@@ -15,6 +15,7 @@
   python -m ruff format --check . and scripts/check-repository.py.
 - Use --once for explicit bounded public network checks; report actual failures.
 - Update DEVLOG.md and ROADMAP.md with commands, outcomes, limitations and next acceptance.
-- Commit only task files after checks pass. This project has no remote; do not create or push
-  to a remote without explicit authorization. Preserve unrelated user changes.
+- Commit only task files after checks pass. The authorized public repository is
+  Issac0797/crypto-market-monitor; do not create or push to another remote without explicit
+  authorization. Preserve unrelated user changes.
 - Never commit local data, logs, venvs, release archives, secrets or encrypted credentials.

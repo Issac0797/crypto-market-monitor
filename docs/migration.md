@@ -2,7 +2,9 @@
 
 来源：私有 `Issac0797/crypto-quant-lab`，具体提交与逐文件哈希见
 [迁入清单](migration-manifest.json)。目标为本地 `crypto market monitor` 项目，
-包名 `crypto_market_monitor`，发行名 `crypto-market-monitor`，没有远端。
+包名 `crypto_market_monitor`，发行名 `crypto-market-monitor`，拆分时没有远端。
+同日用户另行授权发布为公开仓库 `Issac0797/crypto-market-monitor`，
+采用 MIT 许可证；此授权不涉及运行凭据或生产部署。
 
 所有 B 专属规则、价格/基差/资金费/稳定币数据任务、可靠性状态机、
 模板/持久发送队列、Chat ID 只读命令、预检/配置迁移/备份、测试、

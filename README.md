@@ -4,6 +4,11 @@ Bot B 的独立市场风险监控项目，2026-11-09 从 `crypto-quant-lab` 拆�
 使用 Python 3.12+、本地官方公共 REST/WS 适配器和确定性规则；
 不依赖原项目，不包含套利研究、Polymarket、交易执行或 LLM 决策。
 
+项目仓库：<https://github.com/Issac0797/crypto-market-monitor>。
+以 [MIT License](LICENSE) 开源；GitHub 名称与 Python 发行名一致。
+仓库仅包含源码、测试、公开配置与文档，服务器密钥、Telegram 凭据、
+本地加密配置、运行数据库和日志不进入 Git。
+
 监控 BTC/ETH 15 分钟急涨急跌、现货/永续基差、预计资金费、
 USDT/USDC 与 USDe 美元偏离。阈值、确认/恢复规则、配置字节、
 Telegram B 环境变量、消息身份和 SQLite 表结构沿用原实现。
@@ -55,8 +60,10 @@ Linux 使用 `.venv/bin/python` 和绝对状态路径。
 安装器默认 `stage`，不修改生产指针、配置或服务；
 生产安装须显式传入 `activate`，且仍需用户审阅结果后明确批准。
 
-此次仅迁移本地代码并移除原 GitHub 仓库当前树中的 B 专属内容；
+最初拆分仅迁移本地代码并移除原 GitHub 仓库当前树中的 B 专属内容；
 没有创建新远端、改写 Git 历史、复制凭据或切换 VPS。
+2026-11-09 用户另行授权将本项目发布为独立 GitHub 公开仓库；
+该发布仅涉及源码，不授权生产切换。
 保留现有 `/opt/cql-bot-b`、`/etc/cql-bot-b`、
 `/var/lib/cql-bot-b` 和 `cql-bot-b.service` 标识，便于后续有审批的迁移。
 现有 VPS 仍使用旧发布中的 `crypto_quant_lab` 包；

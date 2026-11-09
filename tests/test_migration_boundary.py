@@ -63,6 +63,7 @@ def test_release_contains_independent_runtime_and_exact_reviewed_config():
     with tarfile.open(path) as archive:
         manifest = json.load(archive.extractfile("bot-b-release.json"))
         files = manifest["files"]
+        assert archive.extractfile("LICENSE").read() == (ROOT / "LICENSE").read_bytes()
         assert "src/crypto_market_monitor/risk_watch_cli.py" in files
         assert "src/crypto_market_monitor/systemd_notify.py" in files
         assert "config/bot-b-phase2-3.toml" in files

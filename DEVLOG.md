@@ -1,5 +1,41 @@
 # 开发记录
 
+## 2026-11-09：GitHub 开源发布准备
+
+用户明确授权新建与项目同名的 GitHub 开源仓库，并要求不泄露服务器密钥。
+目标为 `Issac0797/crypto-market-monitor`，名称沿用 Python 发行名。
+开始时工作区干净，仅有初始提交 `52ed50f`，没有远端。
+GitHub 连接器与本机 Git 认证账户一致；目标仓库查询返回 404。
+连接器未提供建库接口，后续通过本机已有 Git 认证调用 GitHub API；
+认证只在进程内使用，不写文件、不输出凭据。
+
+对全部现有历史的 1 个提交、104 份文件版本执行仓库检查，0 findings；
+另查凭据赋值候选，13 处均为检测规则、变量/路径表达式和测试样例。
+扫描只输出路径、规则和行号，不输出匹配内容。
+新增 MIT LICENSE、包元数据中的许可证与仓库地址，并将许可证加入源码包；
+已有发布包测试新增许可证内容校验。更新公开仓库说明与授权边界。
+三份冻结配置、运行规则、状态格式和生产部署均未改变。
+
+实际验证（`.venv/Scripts/python.exe`）：
+
+- 修改前 `-m pytest -q tests/test_repository_guard.py
+  tests/test_migration_boundary.py --basetemp .test-tmp/github-publish-focused
+  --tb=short`：14 passed in 2.79s。
+- 修改后同一专项使用 `--basetemp .test-tmp/github-license-focused`：
+  14 passed in 2.39s。
+- `-m pytest -q --basetemp .test-tmp/github-publish-full --tb=short`：
+  241 passed in 31.23s，无 skip。
+- `-m ruff check .`：通过；`-m ruff format --check .`：
+  90 files already formatted。
+- `scripts/check-repository.py`：105 files、0 findings；`git diff --check` 通过。
+- `.venv/`、`.test-tmp/`、`data/`、`.env`、私钥文件、凭据 JSON 和
+  DPAPI 配置样例路径均由 Git 忽略。
+
+下一步核验实际 Git 索引后提交，创建公开仓库并仅推送当前源码分支，
+再核对远端提交、公开可见性和许可证识别。规则扫描存在覆盖范围限制，
+不将其表述为对任意形式秘密的绝对保证。本次不采集行情、不发送 Telegram，
+不执行 SSH/VPS 操作，不迁移凭据或切换生产。
+
 ## 2026-11-09：独立迁入 Bot B
 
 用户要求将 Bot B 全部市场监控代码迁到已有空项目 crypto market monitor，
