@@ -1,4 +1,4 @@
-"""One-way Telegram HTTPS transport. Never poll updates or expose token-bearing errors."""
+"""Telegram HTTPS transport. Never expose token-bearing errors."""
 
 import asyncio
 import json
@@ -25,7 +25,7 @@ class TelegramAPI:
         if chat_id not in allowed_chat_ids:
             raise ValueError("Telegram destination is not allowlisted")
         self._token, self._chat_id = token, chat_id
-        if profile not in {None, "A", "B"}:
+        if profile not in {None, "B"}:
             raise ValueError("Unknown Bot profile")
         self.profile = profile
         self.bot_id = token.split(":", 1)[0]
@@ -43,18 +43,24 @@ class TelegramAPI:
         cls, env: Mapping[str, str] | None = None, *, bot: str | None = None
     ) -> "TelegramAPI":
         env = os.environ if env is None else env
-        if bot not in {None, "A", "B"}:
+        if bot not in {None, "B"}:
             raise ValueError("Unknown Bot profile")
-        prefix = f"CQL_TELEGRAM_{bot}_" if bot else "CQL_TELEGRAM_"
-        # All-or-nothing legacy compatibility for A only. Never share A's token with B.
-        if bot == "A" and not any(key.startswith(prefix) for key in env):
-            prefix = "CQL_TELEGRAM_"
+        canonical = "CRYPTO_MARKET_MONITOR_TELEGRAM_"
+        # B is a persisted route identifier. Its old variable prefix remains a
+        # fallback so an existing private environment can upgrade in place.
+        legacy = "CQL_TELEGRAM_B_"
+        if any(key.startswith(canonical) for key in env):
+            prefix = canonical
+        elif bot == "B" and any(key.startswith(legacy) for key in env):
+            prefix = legacy
+        else:
+            prefix = canonical
         try:
             return cls(
                 env[prefix + "TOKEN"],
                 int(env[prefix + "CHAT_ID"]),
                 {int(v.strip()) for v in env[prefix + "ALLOWED_CHAT_IDS"].split(",")},
-                profile=bot,
+                profile="B" if bot == "B" else None,
             )
         except (KeyError, ValueError):
             raise ValueError(
@@ -120,5 +126,5 @@ class TelegramAPI:
         await asyncio.to_thread(self._request, message)
 
     async def send_html(self, message: str) -> None:
-        """Explicit opt-in; existing send() remains plain text for Bot A/Paper."""
+        """Explicit HTML opt-in; send() remains plain text."""
         await asyncio.to_thread(self._request, message, html=True)

@@ -125,7 +125,7 @@ def test_cli_defaults_to_market_notifications_and_explicit_diagnostics(monkeypat
         monkeypatch.setattr(
             "sys.argv",
             [
-                "bot-b",
+                "crypto-market-monitor",
                 "--config",
                 "config/bot-phase2-3.toml",
                 "--state-dir",

@@ -1,6 +1,8 @@
 import asyncio
+import importlib.util
 import io
 import json
+from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import AsyncMock, patch
 
@@ -9,38 +11,43 @@ import pytest
 from crypto_market_monitor.bot_cli import configured_api, run
 from crypto_market_monitor.telegram_transport import TelegramAPI, TelegramFailure
 
+CHAT_ID_HELPER = Path(__file__).resolve().parents[1] / "scripts" / "telegram-chat-id.py"
+
+
+def load_chat_id_helper():
+    spec = importlib.util.spec_from_file_location("telegram_chat_id", CHAT_ID_HELPER)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
 
 def bot_env():
     return {
-        "CQL_TELEGRAM_TOKEN": "123:synthetic_a",
-        "CQL_TELEGRAM_CHAT_ID": "10",
-        "CQL_TELEGRAM_ALLOWED_CHAT_IDS": "10",
-        "CQL_TELEGRAM_B_TOKEN": "456:synthetic_b",
-        "CQL_TELEGRAM_B_CHAT_ID": "10",
-        "CQL_TELEGRAM_B_ALLOWED_CHAT_IDS": "10",
+        "CRYPTO_MARKET_MONITOR_TELEGRAM_TOKEN": "456:synthetic_bot",
+        "CRYPTO_MARKET_MONITOR_TELEGRAM_CHAT_ID": "10",
+        "CRYPTO_MARKET_MONITOR_TELEGRAM_ALLOWED_CHAT_IDS": "10",
     }
 
 
-def test_old_bot_credentials_reused_by_a_only_and_no_partial_fallback():
+def test_single_bot_credentials_are_all_or_nothing():
     env = bot_env()
-    a = TelegramAPI.from_env(env, bot="A")
     b = TelegramAPI.from_env(env, bot="B")
-    assert a.route == "telegram:A:bot:123:chat:10"
     assert b.route == "telegram:B:bot:456:chat:10"
-    env["CQL_TELEGRAM_A_CHAT_ID"] = "10"
+    env["CRYPTO_MARKET_MONITOR_TELEGRAM_CHAT_ID"] = ""
     with pytest.raises(ValueError):
-        TelegramAPI.from_env(env, bot="A")
-    with pytest.raises(ValueError):
-        TelegramAPI.from_env(
-            {k: v for k, v in env.items() if not k.startswith("CQL_TELEGRAM_B_")}, bot="B"
-        )
+        TelegramAPI.from_env(env, bot="B")
 
 
-def test_a_and_b_must_be_distinct_bots():
-    env = bot_env()
-    env["CQL_TELEGRAM_B_TOKEN"] = env["CQL_TELEGRAM_TOKEN"]
-    with patch.dict("os.environ", env, clear=True), pytest.raises(ValueError, match="distinct"):
-        configured_api("B")
+def test_legacy_environment_is_used_only_when_new_names_are_absent():
+    legacy = {
+        "CQL_TELEGRAM_B_TOKEN": "789:synthetic_legacy",
+        "CQL_TELEGRAM_B_CHAT_ID": "10",
+        "CQL_TELEGRAM_B_ALLOWED_CHAT_IDS": "10",
+    }
+    api = TelegramAPI.from_env(legacy, bot="B")
+    assert api.bot_id == "789"
+    with patch.dict("os.environ", legacy, clear=True):
+        assert configured_api().bot_id == "789"
 
 
 def test_verify_bot_identity_and_redacted_errors():
@@ -62,9 +69,25 @@ def test_bot_connection_test_reaches_its_own_sender(tmp_path):
     api = TelegramAPI.from_env(bot_env(), bot="B")
     api.verify = AsyncMock(return_value="fixture_bot")
     api.send = AsyncMock()
-    args = SimpleNamespace(
-        bot="B", db=tmp_path / "b.sqlite3", verify=False, test_message=True, once=False
-    )
+    args = SimpleNamespace(db=tmp_path / "b.sqlite3", verify=False, test_message=True, once=False)
     with patch("crypto_market_monitor.bot_cli.configured_api", return_value=api):
         assert asyncio.run(run(args)) == 0
     assert "Bot" in api.send.call_args.args[0]
+
+
+def test_chat_id_helper_reads_only_unique_numeric_chats():
+    helper = load_chat_id_helper()
+    assert helper.configured_token({"CRYPTO_MARKET_MONITOR_TELEGRAM_TOKEN": "123:synthetic"}) == (
+        "123:synthetic"
+    )
+    updates = [
+        {"message": {"chat": {"id": 10, "type": "private", "username": "tester"}}},
+        {"message": {"chat": {"id": -10020, "type": "supergroup", "title": "Risk"}}},
+        {"message": {"chat": {"id": 10, "type": "private", "username": "tester"}}},
+        {"edited_message": {"chat": {"id": 30, "type": "group", "title": "Ops"}}},
+    ]
+    assert helper.chats_from_updates(updates) == [
+        {"chat_id": -10020, "type": "supergroup", "title": "Risk"},
+        {"chat_id": 10, "type": "private", "title": "tester"},
+        {"chat_id": 30, "type": "group", "title": "Ops"},
+    ]

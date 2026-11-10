@@ -114,8 +114,8 @@ class Outbox:
             )
             if any(now_ms < int(value) for value in gates.values()):
                 return None
-            # Implication records require their live registry/book guard. Legacy A/B workers
-            # cannot consume them. Both owners still share the destination's send lease/rate.
+            # Implication records require a live registry/book guard and are never
+            # consumed by a market-risk worker.
             selection = (
                 "AND event_id LIKE 'implication:%' "
                 if implication_owner

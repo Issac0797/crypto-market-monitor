@@ -6,12 +6,12 @@ archive="$2"
 mode="${3:-stage}"
 case "$mode" in stage|activate) ;; *) echo 'Invalid install mode' >&2; exit 1;; esac
 case "$release_id" in *[!a-z0-9-]*|'') echo 'Invalid release id' >&2; exit 1;; esac
-root=/opt/cql-bot
+root=/opt/crypto-market-monitor
 release="$root/releases/$release_id"
 test ! -e "$release"
-id cqlbot >/dev/null 2>&1 || useradd --system --user-group --home-dir /var/lib/cql-bot --shell /usr/sbin/nologin cqlbot
-install -d -m 755 "$root/releases" /etc/cql-bot
-install -d -m 700 -o cqlbot -g cqlbot /var/lib/cql-bot
+id cmm >/dev/null 2>&1 || useradd --system --user-group --home-dir /var/lib/crypto-market-monitor --shell /usr/sbin/nologin cmm
+install -d -m 755 "$root/releases" /etc/crypto-market-monitor
+install -d -m 700 -o cmm -g cmm /var/lib/crypto-market-monitor
 install -d -m 755 "$release"
 python3 - "$archive" "$release" <<'PY'
 import hashlib, json, pathlib, sys, tarfile
@@ -32,7 +32,7 @@ if ! python3 -m venv "$release/venv"; then
 fi
 constraints="$release/dependency-constraints.txt"
 if [ -x "$root/current/venv/bin/python" ]; then
-    "$root/current/venv/bin/python" -m pip freeze | sed -e '/^[Cc]rypto-[Qq]uant-[Ll]ab[ =@]/d' -e '/^[Cc]rypto-[Mm]arket-[Mm]onitor[ =@]/d' > "$constraints"
+    "$root/current/venv/bin/python" -m pip freeze | sed -e '/^[Cc]rypto-[Mm]arket-[Mm]onitor[ =@]/d' > "$constraints"
 else
     : > "$constraints"
 fi
@@ -43,8 +43,8 @@ if [ "$mode" = stage ]; then
     echo 'Staged verified release; existing service and configuration unchanged'
     exit 0
 fi
-install -m 644 "$release/config/bot.toml" /etc/cql-bot/config.toml
-install -m 644 "$release/deploy/systemd/cql-bot.service" /etc/systemd/system/cql-bot.service
+install -m 644 "$release/config/bot.toml" /etc/crypto-market-monitor/config.toml
+install -m 644 "$release/deploy/systemd/crypto-market-monitor.service" /etc/systemd/system/crypto-market-monitor.service
 ln -s "$release" "$root/next"
 mv -Tf "$root/next" "$root/current"
 systemctl daemon-reload

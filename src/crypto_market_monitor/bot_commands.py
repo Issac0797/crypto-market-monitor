@@ -57,7 +57,8 @@ class BotCommands:
         self.started_ms = time.time_ns() // 1000000
         self.last_success_ms = 0
         self.error = "starting"
-        self.locks = Path("/run/cql-bot") if Path("/run/cql-bot").is_dir() else root
+        runtime = Path("/run/crypto-market-monitor")
+        self.locks = runtime if runtime.is_dir() else root
 
     def reply(self, command: str, now_ms: int) -> str:
         w = self.watcher

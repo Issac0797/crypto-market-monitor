@@ -223,25 +223,25 @@ def test_external_symbol_and_source_are_html_escaped(tmp_path):
     assert "&lt;exchange&gt;&amp;" in text
 
 
-def test_transport_html_opt_in_keeps_a_plain_and_templates_isolated(tmp_path):
-    a = TelegramAPI("123:synthetic", 10, {10}, profile="A")
-    b = TelegramAPI("456:synthetic", 10, {10}, profile="B")
+def test_transport_html_opt_in_keeps_plain_and_templates_isolated(tmp_path):
+    plain = TelegramAPI("123:synthetic", 10, {10})
+    bot = TelegramAPI("456:synthetic", 10, {10}, profile="B")
 
     def response():
         return io.BytesIO(b'{"ok":true,"result":{"chat":{"id":10},"message_id":42}}')
 
     with patch("urllib.request.urlopen", side_effect=lambda *a, **k: response()) as send:
-        a._request("<b>A plain</b>")
+        plain._request("<b>plain</b>")
         assert "parse_mode" not in parse_qs(send.call_args.args[0].data.decode())
-        b._request("<b>B HTML</b>", html=True)
+        bot._request("<b>HTML</b>", html=True)
         assert parse_qs(send.call_args.args[0].data.decode())["parse_mode"] == ["HTML"]
     e = watcher(tmp_path).event("BTC/USDT", NOW, "ENTERED", {}, key="synthetic")
-    e = replace(e, details={"bot_channel": "A"})
+    e = replace(e, details={"bot_channel": "other"})
     with pytest.raises(ValueError):
         format_bot(e)
 
     async def check():
-        service = NotificationService(tmp_path / "a.sqlite3", AsyncMock())
+        service = NotificationService(tmp_path / "plain.sqlite3", AsyncMock())
         assert service.formatter is format_message
         await service.close()
 

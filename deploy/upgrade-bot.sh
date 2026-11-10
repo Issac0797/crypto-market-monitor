@@ -4,22 +4,22 @@ set -Eeuo pipefail
 umask 077
 test "${1:-}" = --approved-cutover
 new="${2:?absolute staged release required}"
-root=/opt/cql-bot
-state=/var/lib/cql-bot
+root=/opt/crypto-market-monitor
+state=/var/lib/crypto-market-monitor
 old=$(readlink -f "$root/current")
 case "$new" in "$root"/releases/bot-*) ;; *) exit 2;; esac
 test "$(readlink -f "$new")" = "$new"
 test -x "$new/venv/bin/python"
 test -f "$new/config/bot-phase2-3.toml"
 test "$new" != "$old"
-backup="/var/backups/cql-bot/pre-$(basename "$new")-$(date -u +%Y%m%dT%H%M%SZ)"
+backup="/var/backups/crypto-market-monitor/pre-$(basename "$new")-$(date -u +%Y%m%dT%H%M%SZ)"
 test ! -e "$backup"
-install -d -m 700 /var/backups/cql-bot
+install -d -m 700 /var/backups/crypto-market-monitor
 backed_up=0
 rollback() {
     trap - ERR
     set +e
-    systemctl stop cql-bot
+    systemctl stop crypto-market-monitor
     if [ "$backed_up" = 1 ]; then
         # Keep the failed new version's state/logs before restoring the snapshot.
         cp "$state/data/bot-b.sqlite3" "$backup/failed-new-raw.sqlite3"
@@ -31,42 +31,42 @@ rollback() {
         "$new/venv/bin/python" -c 'from pathlib import Path; from crypto_market_monitor.operations import backup; import sys; backup(Path(sys.argv[1]),Path(sys.argv[2]))' "$state" "$backup/failed-new-state"
         cp -a "$state/logs" "$backup/failed-new-logs"
         cp "$backup/bot-b.sqlite3" "$state/data/bot-b.sqlite3"
-        chown cqlbot:cqlbot "$state/data/bot-b.sqlite3"
+        chown cmm:cmm "$state/data/bot-b.sqlite3"
         chmod 600 "$state/data/bot-b.sqlite3"
-        cp "$backup/config.toml" /etc/cql-bot/config.toml
-        cp "$backup/service.unit" /etc/systemd/system/cql-bot.service
+        cp "$backup/config.toml" /etc/crypto-market-monitor/config.toml
+        cp "$backup/service.unit" /etc/systemd/system/crypto-market-monitor.service
     fi
     ln -s "$old" "$root/rollback-next"
     mv -Tf "$root/rollback-next" "$root/current"
     systemctl daemon-reload
-    systemctl start cql-bot
+    systemctl start crypto-market-monitor
     echo "CUTOVER_FAILED_ROLLED_BACK backup=$backup" >&2
     exit 1
 }
 trap rollback ERR
-systemctl stop cql-bot
+systemctl stop crypto-market-monitor
 "$new/venv/bin/python" -c 'from pathlib import Path; from crypto_market_monitor.operations import backup; import sys; backup(Path(sys.argv[1]),Path(sys.argv[2]))' "$state" "$backup"
-cp /etc/cql-bot/config.toml "$backup/config.toml"
-cp /etc/systemd/system/cql-bot.service "$backup/service.unit"
+cp /etc/crypto-market-monitor/config.toml "$backup/config.toml"
+cp /etc/systemd/system/crypto-market-monitor.service "$backup/service.unit"
 printf '%s\n' "$old" > "$backup/old-release.txt"
 backed_up=1
-"$new/venv/bin/python" -m crypto_market_monitor.bot_migrate --state-dir "$state" --from-config /etc/cql-bot/config.toml --to-config "$new/config/bot-phase2-3.toml"
-install -m 644 "$new/config/bot-phase2-3.toml" /etc/cql-bot/config.toml
-install -m 644 "$new/deploy/systemd/cql-bot.service" /etc/systemd/system/cql-bot.service
-chown cqlbot:cqlbot "$state/data/bot-b.sqlite3"
+"$new/venv/bin/python" -m crypto_market_monitor.bot_migrate --state-dir "$state" --from-config /etc/crypto-market-monitor/config.toml --to-config "$new/config/bot-phase2-3.toml"
+install -m 644 "$new/config/bot-phase2-3.toml" /etc/crypto-market-monitor/config.toml
+install -m 644 "$new/deploy/systemd/crypto-market-monitor.service" /etc/systemd/system/crypto-market-monitor.service
+chown cmm:cmm "$state/data/bot-b.sqlite3"
 chmod 600 "$state/data/bot-b.sqlite3"
 ln -s "$new" "$root/upgrade-next"
 mv -Tf "$root/upgrade-next" "$root/current"
-systemd-analyze verify /etc/systemd/system/cql-bot.service
+systemd-analyze verify /etc/systemd/system/crypto-market-monitor.service
 systemctl daemon-reload
-systemctl enable --now cql-bot
-systemctl is-active --quiet cql-bot
+systemctl enable --now crypto-market-monitor
+systemctl is-active --quiet crypto-market-monitor
 "$new/venv/bin/python" - <<'PY'
 import hashlib,json,time
 from pathlib import Path
-sha=hashlib.sha256(Path('/etc/cql-bot/config.toml').read_bytes()).hexdigest()
+sha=hashlib.sha256(Path('/etc/crypto-market-monitor/config.toml').read_bytes()).hexdigest()
 for _ in range(18):
-    h=json.loads(Path('/var/lib/cql-bot/health.json').read_text())
+    h=json.loads(Path('/var/lib/crypto-market-monitor/health.json').read_text())
     fresh=time.time_ns()//1000000-h.get('updated_ms',0)<30000
     books=all(v=='fresh' for v in h.get('stablecoin_feed',{}).values()) and all(v=='fresh' for v in h.get('basis_feed',{}).values())
     funding=all(v['status'] in {'fresh','waiting_for_fresh_publication'} for v in h.get('funding_feed',{}).values())

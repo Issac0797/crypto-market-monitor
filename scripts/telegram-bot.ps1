@@ -12,11 +12,16 @@ $taskExit = 0
 try {
     if ($Action -eq 'Reconnect' -and -not (Test-Path -LiteralPath $taskProfile)) {
         # The original setup used terminal-scoped env vars. Reuse them when still available.
-        # These environment variable names are a legacy persisted credential contract.
-        $taskPrefix = 'CQL_TELEGRAM_B_'
+        $taskPrefix = 'CRYPTO_MARKET_MONITOR_TELEGRAM_'
         $taskPlain = [Environment]::GetEnvironmentVariable("$($taskPrefix)TOKEN", 'Process')
         $taskChatText = [Environment]::GetEnvironmentVariable("$($taskPrefix)CHAT_ID", 'Process')
         $taskAllowed = [Environment]::GetEnvironmentVariable("$($taskPrefix)ALLOWED_CHAT_IDS", 'Process')
+        if ([string]::IsNullOrWhiteSpace($taskPlain)) {
+            $taskPrefix = 'CQL_TELEGRAM_B_'
+            $taskPlain = [Environment]::GetEnvironmentVariable("$($taskPrefix)TOKEN", 'Process')
+            $taskChatText = [Environment]::GetEnvironmentVariable("$($taskPrefix)CHAT_ID", 'Process')
+            $taskAllowed = [Environment]::GetEnvironmentVariable("$($taskPrefix)ALLOWED_CHAT_IDS", 'Process')
+        }
         if ([string]::IsNullOrWhiteSpace($taskPlain)) {
             $taskSecret = Read-Host 'Bot token (hidden; never paste into chat)' -AsSecureString
             $taskPlain = [Net.NetworkCredential]::new('', $taskSecret).Password
@@ -33,7 +38,7 @@ try {
             throw 'Existing destination is not allowlisted'
         }
         New-Item -ItemType Directory -Path $taskData -Force | Out-Null
-        $taskConfig = [PSCustomObject]@{ Bot = 'B'; Token = $taskSecret; ChatId = $taskChat }
+        $taskConfig = [PSCustomObject]@{ Bot = 'bot'; Token = $taskSecret; ChatId = $taskChat }
         $taskNew = "$taskProfile.new"
         $taskConfig | Export-Clixml -LiteralPath $taskNew
         Move-Item -LiteralPath $taskNew -Destination $taskProfile -Force
@@ -49,7 +54,7 @@ try {
         if ($taskChat -eq 0) { throw 'Invalid destination' }
         New-Item -ItemType Directory -Path $taskData -Force | Out-Null
         # Export-Clixml uses Windows DPAPI for SecureString: tied to this Windows user/machine.
-        $taskConfig = [PSCustomObject]@{ Bot = 'B'; Token = $taskSecret; ChatId = $taskChat }
+        $taskConfig = [PSCustomObject]@{ Bot = 'bot'; Token = $taskSecret; ChatId = $taskChat }
         $taskNew = "$taskProfile.new"
         $taskConfig | Export-Clixml -LiteralPath $taskNew
         Move-Item -LiteralPath $taskNew -Destination $taskProfile -Force
@@ -59,7 +64,7 @@ try {
     }
     if (Test-Path -LiteralPath $taskProfile) {
         $taskConfig = Import-Clixml -LiteralPath $taskProfile
-        if ($taskConfig.Bot -ne 'B' -or $taskConfig.Token -isnot [Security.SecureString]) {
+        if ($taskConfig.Bot -notin @('bot', 'B') -or $taskConfig.Token -isnot [Security.SecureString]) {
             throw 'Invalid local Bot profile'
         }
         $taskValues = @{
@@ -68,7 +73,7 @@ try {
             ALLOWED_CHAT_IDS = [string]$taskConfig.ChatId
         }
         foreach ($taskField in $taskValues.Keys) {
-            $taskName = "CQL_TELEGRAM_B_$taskField"
+            $taskName = "CRYPTO_MARKET_MONITOR_TELEGRAM_$taskField"
             $taskSavedEnv[$taskName] = [Environment]::GetEnvironmentVariable($taskName, 'Process')
             [Environment]::SetEnvironmentVariable($taskName, $taskValues[$taskField], 'Process')
         }

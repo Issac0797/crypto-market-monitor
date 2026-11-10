@@ -151,7 +151,10 @@ def test_changed_parameters_and_wrong_bot_are_rejected(tmp_path):
         RiskWatch(watcher.outbox, replace(configuration(), fingerprint="changed"))
     with pytest.raises(ValueError, match="another Bot"):
         watcher.outbox.enqueue(
-            replace(watcher.event("BTC", NOW, "TEST", {}, key="test"), details={"bot_channel": "A"})
+            replace(
+                watcher.event("BTC", NOW, "TEST", {}, key="test"),
+                details={"bot_channel": "other"},
+            )
         )
 
 

@@ -7,7 +7,7 @@
 - Use Decimal for money and UTC epoch milliseconds for source/receipt time.
 - Preserve existing thresholds, configuration fingerprints, event IDs and SQLite state compatibility.
 - Reject stale, future, malformed, non-finite and inconsistent data. Never restamp source times.
-- Telegram is explicit opt-in; keep B credentials and bound Chat ID isolated from A.
+- Telegram is explicit opt-in; keep credentials and the bound Chat ID private and isolated.
 - Read-only commands only; one polling owner. Never print or commit credentials.
 - No production stop, deployment, DB migration or cutover without explicit user approval
   after a concrete staged result is reviewable. Local migration does not authorize deployment.
