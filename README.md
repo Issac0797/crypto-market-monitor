@@ -15,14 +15,15 @@ Bot 只读取公开市场数据，不接入私有交易所 API、不持有交易
 
 | 事件 | 监控对象 | 规则摘要 |
 | --- | --- | --- |
-| 短时急涨急跌 | BTC/USDT、ETH/USDT 现货盘口中价 | 15 分钟窗口内绝对变动达到 5% 后，持续确认 30 秒；回到 2.5% 以内按恢复规则处理 |
+| 短时急涨急跌 | BTC/USDT、ETH/USDT 现货盘口中价 | 5 分钟绝对变动达到 1% 或 15 分钟达到 5% 后，持续确认 30 秒；分别回到 0.5%、2.5% 以内按恢复规则处理 |
 | 现货/永续基差 | BTC、ETH 现货与 USDT 永续盘口中价 | 绝对基差达到 1% 后，持续确认 60 秒 |
 | 预计资金费 | BTC、ETH USDT 永续合约 | 当前预计资金费折算为 8 小时线性值达到 0.1% 后，持续确认 60 秒 |
 | USDT/USDC 美元偏离 | 经过校验的 USDT/USD、USDC/USD 盘口 | 最优买卖报价整体越过 ±0.5% 后，持续确认 60 秒 |
 | USDe 美元偏离 | Kraken USDE/USD，或 Bybit USDE/USDT × Bitstamp USDT/USD | 美元中价偏离 1 USD 达到 0.5% 后，持续确认 60 秒；回到 0.25% 以内按恢复规则处理 |
 | 数据质量异常 | 全部行情源 | 拒绝过期、未来、格式错误、非有限、源时间不一致以及价差或深度不合格的数据；缺数进入 `DATA_STALE`，不据此宣告风险解除 |
 
-价格事件还会区分触发、升级和恢复。预计资金费是当前预测值，不是已实现收益；
+5 分钟规则只报告异常波动，不播报普通行情。价格事件还会区分触发、升级和恢复。
+预计资金费是当前预测值，不是已实现收益；
 现货/永续基差是盘口中价观察，不代表可以实现的套利收益。
 
 ### Bot 功能
@@ -69,17 +70,19 @@ Windows PowerShell：
 
 ```powershell
 $state = Join-Path $HOME "crypto-market-monitor-state"
-.\.venv\Scripts\python.exe -m crypto_market_monitor.risk_watch_cli --once --config config/bot-phase2-3.toml --state-dir $state
+.\.venv\Scripts\python.exe -m crypto_market_monitor.risk_watch_cli --once --config config/bot-phase4.toml --state-dir $state
 ```
 
 Linux/macOS：
 
 ```bash
-python -m crypto_market_monitor.risk_watch_cli --once --config config/bot-phase2-3.toml --state-dir "$HOME/crypto-market-monitor-state"
+python -m crypto_market_monitor.risk_watch_cli --once --config config/bot-phase4.toml --state-dir "$HOME/crypto-market-monitor-state"
 ```
 
 状态目录保存 SQLite 事件状态和健康快照。首次使用应选择新目录；
 不要将修改过配置指纹的新配置直接指向已有状态目录。`--once` 不发送 Telegram。
+`bot-phase4.toml` 在原有规则上增加 5 分钟异常波动规则；已有
+`bot-phase2-3.toml` 状态目录不能直接切换，需另行审阅状态迁移。
 为兼容已有部署，Telegram profile、凭据变量、SQLite 表名、事件前缀和已有数据库
 文件名继续使用内部历史标识；这些标识不属于公开 Bot 名称，也不应随意改动。
 
@@ -88,7 +91,7 @@ python -m crypto_market_monitor.risk_watch_cli --once --config config/bot-phase2
 去掉 `--once` 后，同一入口会持续轮询公开行情：
 
 ```bash
-python -m crypto_market_monitor.risk_watch_cli --config config/bot-phase2-3.toml --state-dir "$HOME/crypto-market-monitor-state"
+python -m crypto_market_monitor.risk_watch_cli --config config/bot-phase4.toml --state-dir "$HOME/crypto-market-monitor-state"
 ```
 
 生产环境应使用进程管理器保持单实例运行。启用 Telegram 时，同一 Token
@@ -102,7 +105,7 @@ python -m crypto_market_monitor.risk_watch_cli --config config/bot-phase2-3.toml
 $env:CQL_TELEGRAM_B_TOKEN = "YOUR_TELEGRAM_TOKEN"
 $env:CQL_TELEGRAM_B_CHAT_ID = "YOUR_CHAT_ID"
 $env:CQL_TELEGRAM_B_ALLOWED_CHAT_IDS = "YOUR_CHAT_ID"
-.\.venv\Scripts\python.exe -m crypto_market_monitor.risk_watch_cli --config config/bot-phase2-3.toml --state-dir $state --telegram
+.\.venv\Scripts\python.exe -m crypto_market_monitor.risk_watch_cli --config config/bot-phase4.toml --state-dir $state --telegram
 ```
 
 真实 Token 和 Chat ID 只应保存在本机受限权限的环境文件或进程环境中，
@@ -131,7 +134,7 @@ Bot 只响应绑定 Chat ID 发来的新消息；其他 Chat ID 不会获得查�
 先构建只包含源码、公开配置和部署材料的发布包：
 
 ```bash
-python scripts/package-bot.py --config config/bot-phase2-3.toml
+python scripts/package-bot.py --config config/bot-phase4.toml
 ```
 
 命令输出 `release_id`、归档路径和 SHA256。将归档传到目标 Linux 主机后，
@@ -146,7 +149,7 @@ sudo bash deploy/install-bot.sh <release-id> /path/to/<release-archive> stage
 随附的 systemd 模板会以 `--telegram` 启动，并读取 `/etc/cql-bot/telegram.env`；
 首次启用前应创建 `root:root 0600` 环境文件并填入前述变量。安装器模板使用
 `config/bot.toml`；如果需要本 README 所述的 USDe 和可靠性规则，应在首次启动前
-将 `config/bot-phase2-3.toml` 安装为 `/etc/cql-bot/config.toml`。
+将 `config/bot-phase4.toml` 安装为 `/etc/cql-bot/config.toml`。
 已有状态目录不能直接改用不同配置指纹，需先按迁移流程处理。
 
 配置和凭据就绪后，可在目标主机启动服务：
@@ -175,15 +178,16 @@ The project is released under the [MIT License](LICENSE).
 
 | Event | Monitored market | Rule summary |
 | --- | --- | --- |
-| Rapid price move | BTC/USDT and ETH/USDT spot mid-price | A 5% absolute move over 15 minutes must persist for 30 seconds; return below 2.5% follows the recovery rules |
+| Rapid price move | BTC/USDT and ETH/USDT spot mid-price | A 1% absolute move over 5 minutes or 5% over 15 minutes must persist for 30 seconds; returns below 0.5% and 2.5% follow the respective recovery rules |
 | Spot/perpetual basis | BTC and ETH spot and USDT perpetual mid-prices | A 1% absolute basis must persist for 60 seconds |
 | Estimated funding | BTC and ETH USDT perpetuals | The current funding estimate, expressed as an 8-hour linear rate, must reach 0.1% and persist for 60 seconds |
 | USDT/USDC USD deviation | Validated USDT/USD and USDC/USD order books | The complete best bid/ask must move beyond ±0.5% and persist for 60 seconds |
 | USDe USD deviation | Kraken USDE/USD, or Bybit USDE/USDT × Bitstamp USDT/USD | The USD mid-price must deviate from 1 USD by 0.5% and persist for 60 seconds; return within 0.25% follows the recovery rules |
 | Data-quality failure | All market feeds | Rejects stale, future, malformed, non-finite, time-inconsistent, spread-invalid, or depth-invalid data; missing data enters `DATA_STALE` and never implies risk recovery |
 
-Price events distinguish entry, escalation, and recovery. Estimated funding is a forecast,
-not realized income. Spot/perpetual basis is an order-book observation, not realized arbitrage profit.
+The 5-minute rule reports abnormal moves only, not ordinary market activity. Price events
+distinguish entry, escalation, and recovery. Estimated funding is a forecast, not realized
+income. Spot/perpetual basis is an order-book observation, not realized arbitrage profit.
 
 ### Bot Capabilities
 
@@ -230,18 +234,21 @@ Windows PowerShell:
 
 ```powershell
 $state = Join-Path $HOME "crypto-market-monitor-state"
-.\.venv\Scripts\python.exe -m crypto_market_monitor.risk_watch_cli --once --config config/bot-phase2-3.toml --state-dir $state
+.\.venv\Scripts\python.exe -m crypto_market_monitor.risk_watch_cli --once --config config/bot-phase4.toml --state-dir $state
 ```
 
 Linux/macOS:
 
 ```bash
-python -m crypto_market_monitor.risk_watch_cli --once --config config/bot-phase2-3.toml --state-dir "$HOME/crypto-market-monitor-state"
+python -m crypto_market_monitor.risk_watch_cli --once --config config/bot-phase4.toml --state-dir "$HOME/crypto-market-monitor-state"
 ```
 
 The state directory stores SQLite event state and health snapshots. A new installation
 should use a new directory; do not point a configuration with a new fingerprint at an
 existing state directory. `--once` does not send Telegram notifications.
+`bot-phase4.toml` adds the 5-minute abnormal-move rule to the existing rules. An existing
+state directory created with `bot-phase2-3.toml` cannot switch directly and requires a
+separately reviewed state migration.
 Existing deployments retain internal Telegram profile, credential-variable, SQLite table,
 event-prefix, and database filename identifiers for compatibility. These are not public
 Bot names and must not be changed casually.
@@ -251,7 +258,7 @@ Bot names and must not be changed casually.
 Remove `--once` to keep polling public markets:
 
 ```bash
-python -m crypto_market_monitor.risk_watch_cli --config config/bot-phase2-3.toml --state-dir "$HOME/crypto-market-monitor-state"
+python -m crypto_market_monitor.risk_watch_cli --config config/bot-phase4.toml --state-dir "$HOME/crypto-market-monitor-state"
 ```
 
 Use a process supervisor for production and keep exactly one polling instance.
@@ -267,7 +274,7 @@ for compatibility:
 $env:CQL_TELEGRAM_B_TOKEN = "YOUR_TELEGRAM_TOKEN"
 $env:CQL_TELEGRAM_B_CHAT_ID = "YOUR_CHAT_ID"
 $env:CQL_TELEGRAM_B_ALLOWED_CHAT_IDS = "YOUR_CHAT_ID"
-.\.venv\Scripts\python.exe -m crypto_market_monitor.risk_watch_cli --config config/bot-phase2-3.toml --state-dir $state --telegram
+.\.venv\Scripts\python.exe -m crypto_market_monitor.risk_watch_cli --config config/bot-phase4.toml --state-dir $state --telegram
 ```
 
 Keep real Tokens and Chat IDs only in a restricted local environment file or process
@@ -299,7 +306,7 @@ First build a source-only release archive containing source code, public configu
 and deployment materials:
 
 ```bash
-python scripts/package-bot.py --config config/bot-phase2-3.toml
+python scripts/package-bot.py --config config/bot-phase4.toml
 ```
 
 The command prints the `release_id`, archive path, and SHA256. After transferring the
@@ -316,7 +323,7 @@ start the service. The supplied systemd template starts with `--telegram` and re
 `/etc/cql-bot/telegram.env`; create that file as `root:root 0600` and fill in the
 variables above before enabling it. The installer template uses `config/bot.toml`;
 to enable the USDe and reliability rules described here, install
-`config/bot-phase2-3.toml` as `/etc/cql-bot/config.toml` before the first start.
+`config/bot-phase4.toml` as `/etc/cql-bot/config.toml` before the first start.
 Do not point an existing state directory at a different configuration fingerprint;
 follow the migration procedure first.
 

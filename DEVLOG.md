@@ -1,5 +1,46 @@
 # 开发记录
 
+## 2026-11-10：增加 BTC/ETH 5 分钟异常波动候选规则
+
+用户要求继续增加 BTC/ETH 5 分钟涨跌监控，重点是异常行情而非普通行情播报。
+本轮新增 `config/bot-phase4.toml`，在 `bot-phase2-3` 全部规则上增加：
+5 分钟绝对波动达到 1.0% 后确认 30 秒触发，回到 0.5% 内确认 30 秒恢复；
+达到 2.0% 沿用状态机升级。原 15 分钟 5% / 恢复 2.5% 规则、三份既有配置、
+配置指纹、事件前缀和历史 SQLite 兼容标识保持不变。
+
+阈值不是拍脑袋决定：使用 OKX 官方公开历史 K 线接口，以 140 次分页请求读取
+2026-10-17T04:25:00Z 至 2026-11-10T11:40:00Z 的 BTC-USDT、ETH-USDT
+各 7,000 根 5 分钟 K 线，统计相邻收盘价绝对收益。BTC 的 p99.9 为 0.715%、
+最大 1.258%；ETH 的 p99.9 为 1.174%、最大 2.557%。1.0% 对 BTC 已越过
+该样本 99.9% 分位，对 ETH 位于 99.5% 与 99.9% 之间，兼顾异常识别和噪声控制。
+该样本仅约 24 天、单一市场且为收盘价口径，不宣称长期误报率或交易信号有效。
+
+实现只增加配置，不改规则引擎或 SQLite 表结构；5 分钟使用
+`risk_state(symbol,300000)` 和 `engine:bot-b:move:300000:*` 独立事件身份。
+新配置 SHA256 为 `ba3936b0…b677b9298`。现有 `bot-phase2-3` 状态目录不能直接
+切换新指纹，本轮没有执行生产迁移、停服、部署、Telegram 操作或服务切换。
+
+实际验证：
+
+- 新增专项 `tests/test_five_minute_move.py`：7 passed；
+  相关规则/配置/迁移/仓库边界回归：106 passed。
+- 全量测试首轮
+  `-m pytest -q --basetemp .test-tmp/five-minute-full --tb=short`：
+  248 passed in 42.68s；最终文档复验
+  `--basetemp .test-tmp/five-minute-final-full`：248 passed in 44.74s，均无 skip。
+- `-m ruff check .` 通过；`-m ruff format --check .`：92 files already formatted。
+- `scripts/check-repository.py`：108 files、0 findings；`git diff --check` 通过。
+- 以 `--config config/bot-phase4.toml` 构建源码包成功；包内容已随最终文档补记变化，
+  本轮不把一次性归档摘要作为最终发布标识。
+- 使用全新隔离状态执行一次有界公开行情检查：退出 0，valid=4/4，
+  BTC/ETH 现货、基差、资金费、USDT/USDC、USDe 均为 fresh，
+  health 配置指纹与 `bot-phase4.toml` 匹配。
+  关闭阶段同时输出两条 aiohttp `Unclosed client session/connector` 日志；
+  本轮未修改该资源清理路径，后续应单独复核，不能据此宣称关闭过程无告警。
+
+下一验收是审阅 `bot-phase4` 对既有状态的迁移方案，再在隔离主机做影子运行，
+统计 5 分钟触发频率、误报和延迟；生产迁移与切换仍需用户另行明确批准。
+
 ## 2026-11-10：仓库 BotB 命名统一为 Bot
 
 用户要求将 GitHub 仓库中所有 BotB 相关文件统一改名为 Bot。
