@@ -66,7 +66,7 @@ async def refresh_compact_okx_safely(
     try:
         refreshed = await refresh_compact_okx(adapter, symbols, derivatives=derivatives)
     except (OSError, TimeoutError):
-        logging.warning("Bot B public metadata refresh unavailable; bounded retry pending")
+        logging.warning("Bot public metadata refresh unavailable; bounded retry pending")
         return False
     finally:
         adapter._client.options["fetchMarkets"] = previous

@@ -8,11 +8,11 @@ from unittest.mock import AsyncMock
 
 import pytest
 from conftest import NOW
-from test_bot_b_reliability import watcher
+from test_bot_reliability import watcher
 from test_risk_watch import events
 from test_stablecoin_watch import book
 
-from crypto_market_monitor.bot_b_migrate import migrate
+from crypto_market_monitor.bot_migrate import migrate
 from crypto_market_monitor.market_data.contracts import ObservationSet
 from crypto_market_monitor.market_data.derivative_watch import DerivativeWatch
 from crypto_market_monitor.market_data.risk_session import RiskSession
@@ -133,7 +133,7 @@ def test_recovery_gap_cannot_count_as_continuous_success(tmp_path):
 
 
 def test_reliability_only_migration_preserves_existing_records(tmp_path):
-    new = Path("config/bot-b-phase2-3.toml")
+    new = Path("config/bot-phase2-3.toml")
     old = tmp_path / "old.toml"
     old.write_text(
         new.read_text(encoding="utf-8")

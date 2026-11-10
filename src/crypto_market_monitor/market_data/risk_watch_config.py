@@ -1,4 +1,4 @@
-"""Explicit, small Bot B price-watch configuration; no default scanner activation."""
+"""Explicit, small Bot price-watch configuration; no default scanner activation."""
 
 import hashlib
 import tomllib
@@ -7,7 +7,7 @@ from decimal import Decimal
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from crypto_market_monitor.bot_b_policy import BotBPolicy, load_policy
+from crypto_market_monitor.bot_policy import BotPolicy, load_policy
 
 if TYPE_CHECKING:
     from crypto_market_monitor.market_data.usde_config import UsdeConfig
@@ -44,7 +44,7 @@ class RiskWatchConfig:
     funding: MetricRule | None = None
     stablecoin: MetricRule | None = None
     usde: "UsdeConfig | None" = None
-    reliability: BotBPolicy | None = None
+    reliability: BotPolicy | None = None
 
     @classmethod
     def load(cls, path: Path) -> "RiskWatchConfig":

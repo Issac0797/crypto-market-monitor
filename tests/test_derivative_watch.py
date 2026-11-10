@@ -312,8 +312,8 @@ def test_online_backups_are_consistent_due_once_daily_and_keep_previous(tmp_path
 
 
 def test_additive_config_migration_preserves_price_history_and_rejects_rule_tuning(tmp_path):
-    script = runpy.run_path("scripts/migrate-bot-b-config.py")
-    new = Path("config/bot-b.toml")
+    script = runpy.run_path("scripts/migrate-bot-config.py")
+    new = Path("config/bot.toml")
     old = tmp_path / "old.toml"
     old.write_text(new.read_text().split("\n[basis]")[0], encoding="utf-8")
     root = tmp_path / "state"

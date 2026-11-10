@@ -1,4 +1,4 @@
-"""Explicit USDe-only parameters; existing Bot B rules remain unchanged."""
+"""Explicit USDe-only parameters; existing Bot rules remain unchanged."""
 
 from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation

@@ -1,5 +1,47 @@
 # 开发记录
 
+## 2026-11-10：仓库 BotB 命名统一为 Bot
+
+用户要求将 GitHub 仓库中所有 BotB 相关文件统一改名为 Bot。
+使用 `git mv` 重命名 35 个受版本控制文件，包括 Python 模块、专项测试、
+三份配置、打包/迁移/凭据脚本、安装/升级/回滚脚本、systemd unit 和文档。
+文件名中不再包含 `bot-b` 或 `bot_b`。
+
+同步更新 Python 导入和类名、配置路径、脚本入口、发布包前缀
+`bot-<fingerprint>`、服务名 `cql-bot`、部署目录 `/opt/cql-bot` 与
+`/var/lib/cql-bot`、运行用户 `cqlbot`、文档标题及所有本地链接。
+Telegram PowerShell 工具改为单一 Bot 接口，不再要求 `-Bot B`；
+`bot_cli` 默认使用兼容 profile，无需显式传入 `--bot B`。
+
+以下持久化兼容契约刻意保留，避免破坏已有事件身份、SQLite 状态和凭据隔离：
+
+- Event ID 前缀仍为 `engine:bot-b:*`。
+- SQLite 表名、meta key 和已有数据库文件名仍为历史标识。
+- Telegram profile `B` 和 `CQL_TELEGRAM_B_*` 环境变量仍保留。
+- `docs/migration-manifest.json` 的 `source` 路径保留原始迁出来源。
+- 历史部署记录中的实际 release/backup 名称保留，不能事后改写证据。
+
+三份配置仅重命名，未修改内容；读取结果仍为：
+`bot-phase1.toml` 320b1919…、`bot-phase2-3.toml` 9cee084e…、
+`bot.toml` d2e95e8b…，与迁移来源 SHA256 一致。
+Windows PowerShell Parser 验证 `telegram-bot.ps1` 与
+`deploy-bot-credential.ps1` 通过。
+专项离线验证：90 passed；全部包模块导入和 70 份 Python AST 解析通过。
+
+全量验证：
+
+- `-m pytest -q --basetemp .test-tmp/rename-bot-full --tb=short`：
+  241 passed in 75.61s，无 skip。
+- `-m ruff check .`：通过；格式检查最初仅发现两个改名后行宽变化，
+  对 `bot_commands.py` 和 `risk_watch_cli.py` 执行 Ruff format 后，
+  `-m ruff format --check .`：90 files already formatted。
+- `scripts/check-repository.py`：105 files、0 findings；`git diff --check`通过。
+- 本地 Markdown 链接检查：缺失 0；受版本控制的文件名无 `bot-b`/`bot_b`。
+
+本轮不部署、不停服、不迁移生产数据库、不切换服务名；现有服务器上的
+旧服务与状态保持不变。下一验收是在隔离主机审阅新路径模板和旧状态兼容性。
+GitHub 远端同步后还需核对远端树中不含旧文件路径。
+
 ## 2026-11-09：README 双语使用与部署说明
 
 用户要求 README 将机器人公开名称统一为 Bot，介绍监控事件与功能，
@@ -20,12 +62,12 @@ README 现分为简体中文和 English 两部分，包含：
 公开名称在 README 中统一为 Bot；为保持兼容性，现有配置文件、脚本路径、
 环境变量和部署目录中的历史标识未重命名。使用说明明确真实 Token/Chat ID
 只保存于受限环境文件，不进入 README、Git、日志或公开配置。
-部署说明标明安装器模板配置与 `config/bot-b-phase2-3.toml` 的差异，
+部署说明标明安装器模板配置与 `config/bot-phase2-3.toml` 的差异，
 并要求已有状态目录先走配置指纹迁移流程。
 
 实际验证：
 
-- README 名称检查：`Bot B`/`BotB`/`bot B`/`botB` 均未出现；
+- README 名称检查：旧公开名称及其大小写变体均未出现；
   所列本地许可证和文档链接存在。
 - `-m pytest -q --basetemp .test-tmp/readme-final-full --tb=short`：
   241 passed in 66.05s，无 skip。
@@ -86,9 +128,9 @@ default_branch=master、许可证 SPDX=MIT，远端 master 与本地
 不执行 SSH/VPS 操作，不迁移凭据或切换生产。
 下一项验收仍为另行审批后的 VPS 隔离验证与生产切换；此次未运行远端 CI。
 
-## 2026-11-09：独立迁入 Bot B
+## 2026-11-09：独立迁入 Bot
 
-用户要求将 Bot B 全部市场监控代码迁到已有空项目 crypto market monitor，
+用户要求将 Bot 全部市场监控代码迁到已有空项目 crypto market monitor，
 并从原 GitHub 当前版本移除；确认保留原项目两处并行 Polymarket 改动继续。
 本项目无原有文件、提交或远端。源提交和逐文件 SHA256 见
 docs/migration-manifest.json。
@@ -107,7 +149,7 @@ systemd notify 抽成独立 stdlib 模块，移除对原 foundation 服务的导
   创建目录后重跑，未跳过失败项目。首次 Ruff 发现改包名后的长行/导入顺序，
   已格式化修正。README 补建临时目录步骤。
 - `-m pytest -q tests/test_risk_watch.py tests/test_derivative_watch.py
-  tests/test_bot_b_market_only.py tests/test_bot_b_reliability.py
+  tests/test_bot_market_only.py tests/test_bot_reliability.py
   tests/test_bot_connection.py tests/test_migration_boundary.py
   --basetemp .test-tmp/migration-focused-final --tb=short`：
   84 passed in 21.97s。
@@ -120,7 +162,7 @@ systemd notify 抽成独立 stdlib 模块，移除对原 foundation 服务的导
 - 三份公开 TOML SHA256 与迁入前完全相同。64 份迁入 Python 源码/测试
   在还原包名及 systemd notify 导入后 AST 相同；另有明确调整的打包、
   独立连接工具/日志/systemd helper 与 Windows 启动器。
-  来源清单共94项，53项 B 专属文件迁出，其他为共用复制或拆分。
+  来源清单共94项，53项 Bot 专属文件迁出，其他为共用复制或拆分。
 - 暂存核验发现 Git 会将原 TOML 的 CRLF 转为 LF，导致配置指纹变化。
   对三份冻结配置禁用 text 归一化，保留原有 CRLF/末尾空行；
   属性仅声明这些既有换行合法，其他文件仍正常检查空白。

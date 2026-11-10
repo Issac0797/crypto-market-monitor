@@ -1,4 +1,4 @@
-"""Explicit Bot B status, identity verification, test and outbound delivery."""
+"""Explicit Bot status, identity verification, test and outbound delivery."""
 
 import argparse
 import asyncio
@@ -17,14 +17,14 @@ BOT_DATABASES = {"B": Path("data/notifications-market.sqlite3")}
 
 def configured_api(bot: str) -> TelegramAPI:
     if bot != "B":
-        raise ValueError("This project owns Bot B only")
+        raise ValueError("This project owns Bot only")
     api = TelegramAPI.from_env(bot=bot)
     try:
         other = TelegramAPI.from_env(bot="A")
     except ValueError:
         other = None
     if other is not None and api.bot_id == other.bot_id:
-        raise ValueError("Bot A and Bot B must be distinct Telegram bots")
+        raise ValueError("Bot A and Bot must be distinct Telegram bots")
     return api
 
 
@@ -46,14 +46,14 @@ async def run(args: argparse.Namespace) -> int:
             event = NotificationEvent(
                 identity,
                 EventType.SYSTEM,
-                "dual-bot-cli",
+                "bot-cli",
                 "connection-test",
                 time.time_ns() // 1_000_000,
                 "TELEGRAM",
                 "CONNECTION_TEST",
                 {
                     "bot_channel": args.bot,
-                    "note": "Bot B 行情风险通道连接测试",
+                    "note": "Bot 行情风险通道连接测试",
                 },
                 mode="MONITOR",
             )
@@ -76,8 +76,9 @@ async def run(args: argparse.Namespace) -> int:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Bot B outbound connection tools; no trading")
-    parser.add_argument("--bot", choices=("B",), required=True)
+    parser = argparse.ArgumentParser(description="Bot outbound connection tools; no trading")
+    # Profile B is a legacy persisted Telegram route identifier.
+    parser.add_argument("--bot", choices=("B",), default="B")
     parser.add_argument("--db", type=Path)
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument("--status", action="store_true", help="Offline configuration status")

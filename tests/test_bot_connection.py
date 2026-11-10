@@ -58,7 +58,7 @@ def test_verify_bot_identity_and_redacted_errors():
         assert "synthetic_b" not in str(error.value)
 
 
-def test_bot_b_connection_test_reaches_its_own_sender(tmp_path):
+def test_bot_connection_test_reaches_its_own_sender(tmp_path):
     api = TelegramAPI.from_env(bot_env(), bot="B")
     api.verify = AsyncMock(return_value="fixture_bot")
     api.send = AsyncMock()
@@ -67,4 +67,4 @@ def test_bot_b_connection_test_reaches_its_own_sender(tmp_path):
     )
     with patch("crypto_market_monitor.bot_cli.configured_api", return_value=api):
         assert asyncio.run(run(args)) == 0
-    assert "Bot B" in api.send.call_args.args[0]
+    assert "Bot" in api.send.call_args.args[0]

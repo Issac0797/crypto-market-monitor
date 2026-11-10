@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "crypto-market-monitor"
 version = "0.1.0"
-description = "Independent deterministic public market risk monitoring and Bot B notifications"
+description = "Independent deterministic public market risk monitoring and Bot notifications"
 readme = "README.md"
 license = {file = "LICENSE"}
 requires-python = ">=3.12"

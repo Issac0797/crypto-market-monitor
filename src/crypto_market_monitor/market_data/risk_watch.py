@@ -1,4 +1,4 @@
-"""Bounded, persistent price-move observations for explicitly enabled Bot B.
+"""Bounded, persistent price-move observations for explicitly enabled Bot.
 
 No broker, targets, funding forecasts, or language-model decisions.
 """
@@ -7,7 +7,7 @@ import logging
 from dataclasses import asdict, dataclass, replace
 from decimal import Decimal
 
-from crypto_market_monitor import bot_b_details, bot_b_lifecycle
+from crypto_market_monitor import bot_details, bot_lifecycle
 from crypto_market_monitor.market_data.models import MarketKind, OrderBook
 from crypto_market_monitor.market_data.risk_watch_config import MoveRule, RiskWatchConfig
 from crypto_market_monitor.models import DataError
@@ -55,9 +55,9 @@ class RiskWatch:
         self.data_notifications = data_notifications
         self.outbox.bind_channel("B")
         with outbox.connect() as db:
-            bot_b_details.initialize(db)
+            bot_details.initialize(db)
             if config.reliability:
-                bot_b_lifecycle.initialize(db)
+                bot_lifecycle.initialize(db)
             db.execute("PRAGMA max_page_count=8192")  # 32 MiB with SQLite's default 4 KiB pages.
             db.executescript("""
                 CREATE TABLE IF NOT EXISTS risk_samples(
@@ -138,7 +138,7 @@ class RiskWatch:
                 db.execute("DELETE FROM risk_samples WHERE symbol=?", (symbol,))
                 if self.config.reliability:
                     for rule in self.config.rules:
-                        bot_b_lifecycle.stale(
+                        bot_lifecycle.stale(
                             db, f"move:{symbol}:{rule.window_ms}", stamp, "price_source_gap"
                         )
                     db.execute(
@@ -200,7 +200,7 @@ class RiskWatch:
                 ).fetchone()
                 previous = MoveState(*prior) if prior else MoveState()
                 if self.config.reliability:
-                    values, status, evidence = bot_b_lifecycle.evaluate(
+                    values, status, evidence = bot_lifecycle.evaluate(
                         db,
                         f"move:{symbol}:{rule.window_ms}",
                         "move",
@@ -216,7 +216,7 @@ class RiskWatch:
                     state = MoveState(*values)
                 else:
                     state, status = transition(previous, change, rule, stamp, self.config)
-                    evidence = bot_b_details.episode(
+                    evidence = bot_details.episode(
                         db,
                         f"move:{symbol}:{rule.window_ms}",
                         previous.active,
@@ -285,7 +285,7 @@ class RiskWatch:
                 )
             else:
                 db.execute("DELETE FROM bot_b_feed_recovery WHERE symbol=?", (symbol,))
-            details = bot_b_details.feed(db, symbol, good, stamp, recovering=recovering)
+            details = bot_details.feed(db, symbol, good, stamp, recovering=recovering)
             failures = 0 if good else failures + 1
             if good and alerted and not recovering or not good and failures >= 3 and not alerted:
                 self.enqueue_in(
@@ -320,21 +320,21 @@ class RiskWatch:
         }:
             logging.log(
                 logging.INFO if event.status == "DATA_RECOVERED" else logging.WARNING,
-                "Bot B data status: %s %s; Telegram diagnostics disabled",
+                "Bot data status: %s %s; Telegram diagnostics disabled",
                 event.symbol,
                 event.status,
             )
             return False
         if not self.config.reliability:
             return self.outbox.enqueue_in(db, event)
-        from crypto_market_monitor.bot_b_queue import enqueue_in
+        from crypto_market_monitor.bot_queue import enqueue_in
 
         return enqueue_in(db, event, self.config.reliability)
 
     def stale(self, key: str, stamp: int, reason: str) -> None:
         if self.config.reliability:
             with self.outbox.connect() as db:
-                bot_b_lifecycle.stale(db, key, stamp, reason)
+                bot_lifecycle.stale(db, key, stamp, reason)
 
     def prune(self, now_ms: int) -> None:
         with self.outbox.connect() as db:

@@ -5,7 +5,7 @@ from types import SimpleNamespace
 from unittest.mock import AsyncMock
 
 from conftest import NOW
-from test_bot_b_phase1 import book
+from test_bot_phase1 import book
 
 from crypto_market_monitor.market_data import stablecoin_feed as module
 from crypto_market_monitor.market_data.contracts import Capability

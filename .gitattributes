@@ -8,4 +8,4 @@
 *.whl binary
 
 # Frozen config fingerprints include original CRLFs and trailing blank lines.
-config/bot-b*.toml -text whitespace=cr-at-eol,-blank-at-eof
+config/bot*.toml -text whitespace=cr-at-eol,-blank-at-eof

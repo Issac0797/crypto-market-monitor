@@ -1,4 +1,4 @@
-"""Two bounded, public native WebSocket subscriptions inside the Bot B process."""
+"""Two bounded, public native WebSocket subscriptions inside the Bot process."""
 
 import asyncio
 import logging
@@ -52,7 +52,7 @@ class FundingStream:
             except Exception:
                 if self.rest_fallback:
                     try:
-                        # Explicit Bot B fallback to the SAME OKX forecast and
+                        # Explicit Bot fallback to the SAME OKX forecast and
                         # actual schedule; adapter still parses native info.ts.
                         observation = await asyncio.wait_for(
                             self.adapter.fetch_funding(instrument), 5

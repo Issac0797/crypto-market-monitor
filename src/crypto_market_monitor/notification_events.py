@@ -120,7 +120,7 @@ def format_message(event: NotificationEvent) -> str:
         f"UTC epoch ms: {event.timestamp_ms} | ID: {event.event_id}",
     ]
     if event.details.get("bot_channel") == "B":
-        lines.insert(0, "[Bot B]")
+        lines.insert(0, "[Bot]")
     lines.extend(f"{key}: {value}" for key, value in event.details.items() if key != "bot_channel")
     text = "\n".join(lines)
     encoded = text.encode("utf-16-le")

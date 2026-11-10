@@ -46,9 +46,9 @@ def test_release_contains_independent_runtime_and_exact_reviewed_config():
     result = subprocess.run(
         [
             sys.executable,
-            str(ROOT / "scripts/package-bot-b.py"),
+            str(ROOT / "scripts/package-bot.py"),
             "--config",
-            "config/bot-b-phase2-3.toml",
+            "config/bot-phase2-3.toml",
         ],
         cwd=ROOT,
         capture_output=True,
@@ -61,12 +61,12 @@ def test_release_contains_independent_runtime_and_exact_reviewed_config():
     assert path.resolve().is_relative_to(ROOT / "data")
     assert hashlib.sha256(path.read_bytes()).hexdigest() == output["archive_sha256"]
     with tarfile.open(path) as archive:
-        manifest = json.load(archive.extractfile("bot-b-release.json"))
+        manifest = json.load(archive.extractfile("bot-release.json"))
         files = manifest["files"]
         assert archive.extractfile("LICENSE").read() == (ROOT / "LICENSE").read_bytes()
         assert "src/crypto_market_monitor/risk_watch_cli.py" in files
         assert "src/crypto_market_monitor/systemd_notify.py" in files
-        assert "config/bot-b-phase2-3.toml" in files
+        assert "config/bot-phase2-3.toml" in files
         assert "crypto-market-monitor" in archive.extractfile("pyproject.toml").read().decode()
         assert all("crypto_quant_lab" not in name for name in files)
         assert not any(
@@ -78,5 +78,5 @@ def test_release_contains_independent_runtime_and_exact_reviewed_config():
             assert hashlib.sha256(body).hexdigest() == digest
             if name.startswith("src/"):
                 assert b"crypto_quant_lab" not in body
-        config = archive.extractfile("config/bot-b-phase2-3.toml").read()
-        assert config == (ROOT / "config/bot-b-phase2-3.toml").read_bytes()
+        config = archive.extractfile("config/bot-phase2-3.toml").read()
+        assert config == (ROOT / "config/bot-phase2-3.toml").read_bytes()

@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 from conftest import NOW
-from test_bot_b_phase1 import book
+from test_bot_phase1 import book
 from test_risk_watch import events
 
 from crypto_market_monitor.market_data.derivative_watch import DerivativeWatch
@@ -17,7 +17,7 @@ from crypto_market_monitor.notification_store import Outbox
 
 
 def metrics(root, *, reliable=True):
-    name = "bot-b-phase2-3.toml" if reliable else "bot-b-phase1.toml"
+    name = "bot-phase2-3.toml" if reliable else "bot-phase1.toml"
     config = RiskWatchConfig.load(Path("config") / name)
     return DerivativeWatch(RiskWatch(Outbox(root / "b.sqlite3"), config))
 

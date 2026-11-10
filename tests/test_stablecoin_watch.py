@@ -115,7 +115,7 @@ def test_gap_resets_confirmation_and_feed_health_is_independent(tmp_path):
 
 
 def test_current_configuration_removes_five_minute_and_enables_usd_peg():
-    c = RiskWatchConfig.load(Path("config/bot-b.toml"))
+    c = RiskWatchConfig.load(Path("config/bot.toml"))
     assert [r.window_ms for r in c.rules] == [900000]
     assert c.stablecoin.threshold == D("0.005")
 
@@ -219,8 +219,8 @@ def test_compact_usd_discovery_keeps_only_two_markets():
 
 
 def test_specific_migration_removes_only_retired_state_and_pending_alerts(tmp_path):
-    migrate = runpy.run_path("scripts/migrate-bot-b-config.py")["migrate"]
-    new = Path("config/bot-b.toml")
+    migrate = runpy.run_path("scripts/migrate-bot-config.py")["migrate"]
+    new = Path("config/bot.toml")
     content = new.read_text(encoding="utf-8").split("\n[stablecoin]")[0]
     old = tmp_path / "old.toml"
     old.write_text(

@@ -7,7 +7,7 @@ Funding is the exchange forecast, linearly normalized to eight hours for compari
 from dataclasses import asdict, replace
 from decimal import Decimal
 
-from crypto_market_monitor import bot_b_details, bot_b_lifecycle
+from crypto_market_monitor import bot_details, bot_lifecycle
 from crypto_market_monitor.market_data.models import FundingObservation, MarketKind, OrderBook
 from crypto_market_monitor.market_data.risk_watch import MoveState, RiskWatch, transition
 from crypto_market_monitor.market_data.risk_watch_config import MetricRule, MoveRule
@@ -35,7 +35,7 @@ class DerivativeWatch:
                     "SELECT last_ms FROM derivative_state WHERE kind=? AND symbol=?", (kind, symbol)
                 ).fetchone()
                 stamp = now_ms if now_ms is not None else prior[0] if prior else 1
-                bot_b_lifecycle.stale(db, f"{kind}:{symbol}", stamp, "invalid_or_missing_data")
+                bot_lifecycle.stale(db, f"{kind}:{symbol}", stamp, "invalid_or_missing_data")
             db.execute(
                 "UPDATE derivative_state SET candidate=active,since_ms=0 WHERE kind=? AND symbol=?",
                 (kind, symbol),
@@ -90,7 +90,7 @@ class DerivativeWatch:
                 state = replace(state, since_ms=stamp)
             previous = state
             if self.config.reliability:
-                values, status, episode = bot_b_lifecycle.evaluate(
+                values, status, episode = bot_lifecycle.evaluate(
                     db,
                     f"{kind}:{symbol}",
                     kind,
@@ -113,7 +113,7 @@ class DerivativeWatch:
                     stamp,
                     replace(self.config, confirm_ms=rule.confirm_ms),
                 )
-                episode = bot_b_details.episode(
+                episode = bot_details.episode(
                     db, f"{kind}:{symbol}", previous.active, state.active, status, value, stamp
                 )
             db.execute(

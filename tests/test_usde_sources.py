@@ -8,7 +8,7 @@ from unittest.mock import AsyncMock
 
 import pytest
 from conftest import NOW
-from test_bot_b_phase1 import book
+from test_bot_phase1 import book
 
 from crypto_market_monitor.adapters.compact_bybit import build_compact_bybit
 from crypto_market_monitor.market_data.risk_watch_config import RiskWatchConfig
@@ -92,8 +92,8 @@ def test_native_bybit_uses_snapshot_source_ts_not_old_matching_or_local_time():
 
 
 def test_candidate_changes_only_usde_source_and_reliability():
-    old = RiskWatchConfig.load(Path("config/bot-b.toml"))
-    candidate = RiskWatchConfig.load(Path("config/bot-b-phase2-3.toml"))
+    old = RiskWatchConfig.load(Path("config/bot.toml"))
+    candidate = RiskWatchConfig.load(Path("config/bot-phase2-3.toml"))
     for key in old.__dataclass_fields__:
         if key not in {"usde", "reliability", "fingerprint"}:
             assert getattr(old, key) == getattr(candidate, key)
@@ -124,7 +124,7 @@ def test_kraken_failure_does_not_block_bybit_and_disconnect_clears_only_cross(mo
         monkeypatch.setattr(
             module, "build_compact_bybit", AsyncMock(return_value=(a, (b.instrument,)))
         )
-        config = RiskWatchConfig.load(Path("config/bot-b-phase2-3.toml")).usde
+        config = RiskWatchConfig.load(Path("config/bot-phase2-3.toml")).usde
         f = module.UsdeFeed(replace(config, quote_poll_seconds=0.01))
         f.start()
         try:
@@ -171,7 +171,7 @@ def test_cleanup_error_does_not_cancel_peer_and_failed_source_rebuilds(monkeypat
 
         monkeypatch.setattr(module.UsdeFeed, "_kraken", healthy_peer)
         monkeypatch.setattr(module, "build_compact_bybit", build)
-        config = RiskWatchConfig.load(Path("config/bot-b-phase2-3.toml")).usde
+        config = RiskWatchConfig.load(Path("config/bot-phase2-3.toml")).usde
         f = module.UsdeFeed(replace(config, quote_poll_seconds=0.01, refresh_seconds=0.005))
         f.start()
         try:

@@ -171,7 +171,7 @@ class PublicTransport:
             }
         ):
             raise ValueError("Unreviewed info request")
-        # Shared pacing applies even with Bot B's bounded concurrent reads.
+        # Shared pacing applies even with Bot's bounded concurrent reads.
         async with self._lock:
             await asyncio.sleep(
                 max(0, max(self._next_request, self._blocked_until) - time.monotonic())

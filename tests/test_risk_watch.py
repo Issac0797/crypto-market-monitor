@@ -19,7 +19,7 @@ from crypto_market_monitor.notification_store import Outbox
 
 def configuration():
     return replace(
-        RiskWatchConfig.load(Path("config/bot-b.toml")),
+        RiskWatchConfig.load(Path("config/bot.toml")),
         rules=(MoveRule(300000, D("0.03"), D("0.015")), MoveRule(900000, D("0.05"), D("0.025"))),
     )
 
@@ -198,6 +198,6 @@ def test_compact_discovery_only_loads_explicit_spot_markets_and_closes_on_fault(
 )
 def test_unsafe_config_is_rejected(tmp_path, substitution):
     path = tmp_path / "bad.toml"
-    path.write_text(Path("config/bot-b.toml").read_text().replace(*substitution), encoding="utf-8")
+    path.write_text(Path("config/bot.toml").read_text().replace(*substitution), encoding="utf-8")
     with pytest.raises(ValueError):
         RiskWatchConfig.load(path)

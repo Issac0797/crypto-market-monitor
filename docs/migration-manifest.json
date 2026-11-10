@@ -12,126 +12,126 @@
     },
     {
       "source": "config/bot-b-phase1.toml",
-      "destination": "config/bot-b-phase1.toml",
+      "destination": "config/bot-phase1.toml",
       "source_sha256": "320b1919f54698b5ee7796c8c56d7280228421cf54d56e121034d444119a51b0",
       "destination_sha256": "320b1919f54698b5ee7796c8c56d7280228421cf54d56e121034d444119a51b0",
       "kind": "moved"
     },
     {
       "source": "config/bot-b-phase2-3.toml",
-      "destination": "config/bot-b-phase2-3.toml",
+      "destination": "config/bot-phase2-3.toml",
       "source_sha256": "9cee084e6c47e92108667a800d7ea77680da0b8c6e53ae59f7e61c9e83b9cee3",
       "destination_sha256": "9cee084e6c47e92108667a800d7ea77680da0b8c6e53ae59f7e61c9e83b9cee3",
       "kind": "moved"
     },
     {
       "source": "config/bot-b.toml",
-      "destination": "config/bot-b.toml",
+      "destination": "config/bot.toml",
       "source_sha256": "d2e95e8bd0a1115f43132bbfbaa644fb8c793b05cefb1bce229418f3ead683db",
       "destination_sha256": "d2e95e8bd0a1115f43132bbfbaa644fb8c793b05cefb1bce229418f3ead683db",
       "kind": "moved"
     },
     {
       "source": "deploy/install-bot-b.sh",
-      "destination": "deploy/install-bot-b.sh",
+      "destination": "deploy/install-bot.sh",
       "source_sha256": "e83fae649e428f0c2dc28eb12f7ac3edcf954b676179ee5a843ace56a00da8aa",
       "destination_sha256": "565eab64f5e5204fa89c3692da9175c87267c69b47576db60a00c935a2688104",
       "kind": "moved"
     },
     {
       "source": "deploy/rollback-bot-b.sh",
-      "destination": "deploy/rollback-bot-b.sh",
+      "destination": "deploy/rollback-bot.sh",
       "source_sha256": "643091e0d814bf559597edc265cdfe79a88f09f31a26562651c179f43ca43b6b",
       "destination_sha256": "03d43ffb14b19211ade714f569f7f88fc1119ed7dc1f4f19b6f3fa7c57a6a0da",
       "kind": "moved"
     },
     {
       "source": "deploy/systemd/cql-bot-b.service",
-      "destination": "deploy/systemd/cql-bot-b.service",
+      "destination": "deploy/systemd/cql-bot.service",
       "source_sha256": "55ada64d5f74244764c0fd84cab83e11b059d5a0bfee7eccd28baca928c191fd",
       "destination_sha256": "3d7b9ab08aeaa824ec946ef2f8525f0a281e8735e8d795aca0ac4e03fba4cf26",
       "kind": "moved"
     },
     {
       "source": "deploy/upgrade-bot-b.sh",
-      "destination": "deploy/upgrade-bot-b.sh",
+      "destination": "deploy/upgrade-bot.sh",
       "source_sha256": "0e6253a5ee078e1c3555fba907eb00c03a7d47a65f571f38a8de159593975aa2",
       "destination_sha256": "136df6351c3e1edba24b8e57ea1e4919b59874aeffbc3d5343d54da853764f05",
       "kind": "moved"
     },
     {
       "source": "docs/bot-b-deployment.md",
-      "destination": "docs/bot-b-deployment.md",
+      "destination": "docs/bot-deployment.md",
       "source_sha256": "fdaaf9cdc925e730b95d9c950c44fde179fa3df3e449e75672f0847221b2c2b1",
       "destination_sha256": "fdaaf9cdc925e730b95d9c950c44fde179fa3df3e449e75672f0847221b2c2b1",
       "kind": "moved"
     },
     {
       "source": "docs/bot-b-market-notifications-2026-11-04.md",
-      "destination": "docs/bot-b-market-notifications-2026-11-04.md",
+      "destination": "docs/bot-market-notifications-2026-11-04.md",
       "source_sha256": "9f1c8ef1cba52f32ae6f161c71e854482872e5dc64b233d085d4854ccd841da9",
       "destination_sha256": "9f1c8ef1cba52f32ae6f161c71e854482872e5dc64b233d085d4854ccd841da9",
       "kind": "moved"
     },
     {
       "source": "docs/bot-b-market-notifications-vps-2026-11-04.md",
-      "destination": "docs/bot-b-market-notifications-vps-2026-11-04.md",
+      "destination": "docs/bot-market-notifications-vps-2026-11-04.md",
       "source_sha256": "1e5dad93969bba77c0b21c84b85bedd1fb5b4153d3ba0842de6e9be9bb5322af",
       "destination_sha256": "1e5dad93969bba77c0b21c84b85bedd1fb5b4153d3ba0842de6e9be9bb5322af",
       "kind": "moved"
     },
     {
       "source": "docs/bot-b-okx-fix.md",
-      "destination": "docs/bot-b-okx-fix.md",
+      "destination": "docs/bot-okx-fix.md",
       "source_sha256": "b2c2eebedae920191e94af43065bfe487a9bf7da808f42384c18cb7b454f9e4a",
       "destination_sha256": "b2c2eebedae920191e94af43065bfe487a9bf7da808f42384c18cb7b454f9e4a",
       "kind": "moved"
     },
     {
       "source": "docs/bot-b-operations.md",
-      "destination": "docs/bot-b-operations.md",
+      "destination": "docs/bot-operations.md",
       "source_sha256": "1b68725ecc379744d6df98371266506a387ed0d4cdfa66d1ccaa10752cf4832d",
       "destination_sha256": "1b68725ecc379744d6df98371266506a387ed0d4cdfa66d1ccaa10752cf4832d",
       "kind": "moved"
     },
     {
       "source": "docs/bot-b-phase1.md",
-      "destination": "docs/bot-b-phase1.md",
+      "destination": "docs/bot-phase1.md",
       "source_sha256": "6a8e335c2d0feff44a3675a0e15e71d0f7d53a22564a658f529225b7e2bc1969",
       "destination_sha256": "6a8e335c2d0feff44a3675a0e15e71d0f7d53a22564a658f529225b7e2bc1969",
       "kind": "moved"
     },
     {
       "source": "docs/bot-b-phase2-3.md",
-      "destination": "docs/bot-b-phase2-3.md",
+      "destination": "docs/bot-phase2-3.md",
       "source_sha256": "96374ad03d30aeb7070a54433e66d5bc54eb346148b6ff3a31a24c88dc402c5b",
       "destination_sha256": "96374ad03d30aeb7070a54433e66d5bc54eb346148b6ff3a31a24c88dc402c5b",
       "kind": "moved"
     },
     {
       "source": "docs/bot-b-server.md",
-      "destination": "docs/bot-b-server.md",
+      "destination": "docs/bot-server.md",
       "source_sha256": "bdec825eecbdb59e3ad6039cdab3dedfb42f88ef1c5e716ac4174fbca3bebd01",
       "destination_sha256": "bdec825eecbdb59e3ad6039cdab3dedfb42f88ef1c5e716ac4174fbca3bebd01",
       "kind": "moved"
     },
     {
       "source": "docs/bot-b-usdc-fix.md",
-      "destination": "docs/bot-b-usdc-fix.md",
+      "destination": "docs/bot-usdc-fix.md",
       "source_sha256": "6316a5b37778791a3f69c6f0782d44ff126c70c8b54d5fc7392c4ebca2bef876",
       "destination_sha256": "6316a5b37778791a3f69c6f0782d44ff126c70c8b54d5fc7392c4ebca2bef876",
       "kind": "moved"
     },
     {
       "source": "docs/bot-b-usde-fix.md",
-      "destination": "docs/bot-b-usde-fix.md",
+      "destination": "docs/bot-usde-fix.md",
       "source_sha256": "1af3c585ddf4d3cf1880acaf3091ed16368b07fd9d1e9b028b54f3e6ef4f7b8c",
       "destination_sha256": "1af3c585ddf4d3cf1880acaf3091ed16368b07fd9d1e9b028b54f3e6ef4f7b8c",
       "kind": "moved"
     },
     {
       "source": "docs/dual-bot-setup.md",
-      "destination": "docs/dual-bot-setup.md",
+      "destination": "docs/bot-setup.md",
       "source_sha256": "af61cb2e8f2565c1d309dc3160ad251d580694e5f64e1bc2728e2a17fbf1cc53",
       "destination_sha256": "beafd0fadd5677a3f17dfaae55b4bc4fad8fdfdf63242f09d70f1cc5c6b2a61c",
       "kind": "shared-copy"
@@ -159,21 +159,21 @@
     },
     {
       "source": "scripts/deploy-bot-b-credential.ps1",
-      "destination": "scripts/deploy-bot-b-credential.ps1",
+      "destination": "scripts/deploy-bot-credential.ps1",
       "source_sha256": "459552d1487ff048a8dec9d96fb084e7eaf7a8d775fd2311a64e22dd94e2f5ed",
       "destination_sha256": "459552d1487ff048a8dec9d96fb084e7eaf7a8d775fd2311a64e22dd94e2f5ed",
       "kind": "moved"
     },
     {
       "source": "scripts/migrate-bot-b-config.py",
-      "destination": "scripts/migrate-bot-b-config.py",
+      "destination": "scripts/migrate-bot-config.py",
       "source_sha256": "00ef6fadb43a4a80b4fe910f0918c8e5f0a759c9a79dbc80f365790f841e0903",
       "destination_sha256": "762689110badaef13c631103ce1927511e374912ac4f5c3eea1e84e96c156336",
       "kind": "moved"
     },
     {
       "source": "scripts/package-bot-b.py",
-      "destination": "scripts/package-bot-b.py",
+      "destination": "scripts/package-bot.py",
       "source_sha256": "539aa7903dd3632b0cff74f19028e5dbf3ee00b821110eb21911d7a1d23e25ca",
       "destination_sha256": "ed3f66f5bf7ecf62fc8dddff4a704bdbcb870e361b01aaaed12b05ca7a84b025",
       "kind": "moved"
@@ -278,56 +278,56 @@
     },
     {
       "source": "src/crypto_quant_lab/bot_b_commands.py",
-      "destination": "src/crypto_market_monitor/bot_b_commands.py",
+      "destination": "src/crypto_market_monitor/bot_commands.py",
       "source_sha256": "c2a9439afab911208951e8edfc1d00ffd2604286d66c5850832a475cfa76f7fa",
       "destination_sha256": "63f1e08ec69ac2863dc14f4cd27cf47da10e3142bde0ea9908923125b7e44d96",
       "kind": "moved"
     },
     {
       "source": "src/crypto_quant_lab/bot_b_details.py",
-      "destination": "src/crypto_market_monitor/bot_b_details.py",
+      "destination": "src/crypto_market_monitor/bot_details.py",
       "source_sha256": "3407d0012f0a73a968dbcfa38446ebd74d69c35d41560aa35ec9136f5325b902",
       "destination_sha256": "3407d0012f0a73a968dbcfa38446ebd74d69c35d41560aa35ec9136f5325b902",
       "kind": "moved"
     },
     {
       "source": "src/crypto_quant_lab/bot_b_lifecycle.py",
-      "destination": "src/crypto_market_monitor/bot_b_lifecycle.py",
+      "destination": "src/crypto_market_monitor/bot_lifecycle.py",
       "source_sha256": "081d1d738e60d958df80c68853437f5241b15d6ed9c617ec71b61d80daab1fd9",
       "destination_sha256": "0f723ba9c1341891b067c00bbc443e758d7dab39f856710d04253ab228a45d66",
       "kind": "moved"
     },
     {
       "source": "src/crypto_quant_lab/bot_b_migrate.py",
-      "destination": "src/crypto_market_monitor/bot_b_migrate.py",
+      "destination": "src/crypto_market_monitor/bot_migrate.py",
       "source_sha256": "36ec31cca981a870666274f961e3f643ff5b7f0322aaf83d08d75d5378a5965d",
       "destination_sha256": "4048e8b29aa9dbe04ae1f597885286ac29ccfb4b864e3cfb139d2601a11bfeb6",
       "kind": "moved"
     },
     {
       "source": "src/crypto_quant_lab/bot_b_policy.py",
-      "destination": "src/crypto_market_monitor/bot_b_policy.py",
+      "destination": "src/crypto_market_monitor/bot_policy.py",
       "source_sha256": "3d6edac7785b58a201f28313c3dfe2cad5430fb34781f2c621a9c91dc5511afc",
       "destination_sha256": "3d6edac7785b58a201f28313c3dfe2cad5430fb34781f2c621a9c91dc5511afc",
       "kind": "moved"
     },
     {
       "source": "src/crypto_quant_lab/bot_b_preflight.py",
-      "destination": "src/crypto_market_monitor/bot_b_preflight.py",
+      "destination": "src/crypto_market_monitor/bot_preflight.py",
       "source_sha256": "c55eb025a6eea0d98baef0e93d06ac05b0548079200ca9ba26318ed33b5bc129",
       "destination_sha256": "89b9cfcad6f0b4cba69716abef7b1e40068504a14f6a1b15610808f044f63e90",
       "kind": "moved"
     },
     {
       "source": "src/crypto_quant_lab/bot_b_queue.py",
-      "destination": "src/crypto_market_monitor/bot_b_queue.py",
+      "destination": "src/crypto_market_monitor/bot_queue.py",
       "source_sha256": "c33159bdbb061538ae71670a782217c1a0ba19c9b7ca1791c8d86e632f7d5c63",
       "destination_sha256": "590e54a3779eef2d98b5c94d47a28520d25c00c0cd9919e7bb29a7d474e2b4aa",
       "kind": "moved"
     },
     {
       "source": "src/crypto_quant_lab/bot_b_templates.py",
-      "destination": "src/crypto_market_monitor/bot_b_templates.py",
+      "destination": "src/crypto_market_monitor/bot_templates.py",
       "source_sha256": "1606d01b7f623c23ba8c09a804e4110a9f6b31642f47d1b59718157f5d698634",
       "destination_sha256": "29af576be91124723b7a77118a6aac3a3978895233d224bbb6b9a5db071c1487",
       "kind": "moved"
@@ -341,7 +341,7 @@
     },
     {
       "source": "src/crypto_quant_lab/market_data/bot_b_okx_books.py",
-      "destination": "src/crypto_market_monitor/market_data/bot_b_okx_books.py",
+      "destination": "src/crypto_market_monitor/market_data/bot_okx_books.py",
       "source_sha256": "e01b15ed9bf7415eabd596b03f8e6dc0df57d26c79b21b2e22126d34034bc37f",
       "destination_sha256": "741a621c2f2dc71c3df10e3895de6bc17cda025a2e235fdfb6d57189613c7196",
       "kind": "moved"
@@ -516,28 +516,28 @@
     },
     {
       "source": "tests/test_bot_b_market_only.py",
-      "destination": "tests/test_bot_b_market_only.py",
+      "destination": "tests/test_bot_market_only.py",
       "source_sha256": "1899c3a9b43b0b798fb8bc618508e96e801d0dae5592ea2083b3e657fb2b2bee",
       "destination_sha256": "14334b625c8b8825f74d679897b257a396bd1ea39d25bbc3cc13edf5a88d450f",
       "kind": "moved"
     },
     {
       "source": "tests/test_bot_b_okx_reliability.py",
-      "destination": "tests/test_bot_b_okx_reliability.py",
+      "destination": "tests/test_bot_okx_reliability.py",
       "source_sha256": "bd1f7971dc2046305a1e3aa967eab3cbe5369cf4078a502fd51139f22ac4d5a7",
       "destination_sha256": "63c757bd2adcaf1f9533d3d4ea2174f034081485824f02e3d744c382301c9897",
       "kind": "moved"
     },
     {
       "source": "tests/test_bot_b_phase1.py",
-      "destination": "tests/test_bot_b_phase1.py",
+      "destination": "tests/test_bot_phase1.py",
       "source_sha256": "6e311879aaa7f4070e87b9e7394cc1d4b2b4d00a1501fc12c08a7687da9bb12a",
       "destination_sha256": "0a6b67ae75b8cfc0e6a026595c82fd8dfdc006f9bb0c89ccfc0f5382fd628663",
       "kind": "moved"
     },
     {
       "source": "tests/test_bot_b_reliability.py",
-      "destination": "tests/test_bot_b_reliability.py",
+      "destination": "tests/test_bot_reliability.py",
       "source_sha256": "3a894f21fbf34df1178a789022d90173d72b63275d9507908ca8660901b986cc",
       "destination_sha256": "335a7bb4144c8787142a409fe8d0f7f045c839466bf734c37f63e28764b3d615",
       "kind": "moved"
@@ -642,7 +642,7 @@
     },
     {
       "source": "scripts/telegram-bots.ps1",
-      "destination": "scripts/telegram-bots.ps1",
+      "destination": "scripts/telegram-bot.ps1",
       "kind": "split",
       "source_sha256": "d9809951e5c67ccfc2c2e244d58a39ce0e0679a406ae4da81d1e5a0fd7ebe24d",
       "destination_sha256": "36fb5aaab959aa456fc074dff278a8200ef2d4fad8f171a30a5f76f85f588216"

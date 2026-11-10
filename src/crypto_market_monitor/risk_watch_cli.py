@@ -1,4 +1,7 @@
-"""Explicit low-memory market-risk runner for Bot B; no execution path."""
+"""Explicit low-memory market-risk runner for Bot; no execution path.
+
+The legacy database filename is a persisted state compatibility identifier.
+"""
 
 import argparse
 import asyncio
@@ -9,10 +12,10 @@ import time
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
-from crypto_market_monitor.bot_b_commands import BotBCommands, BotBTelegramAPI
-from crypto_market_monitor.bot_b_queue import BotBNotificationService
-from crypto_market_monitor.bot_b_templates import format_bot_b
-from crypto_market_monitor.market_data.bot_b_okx_books import BotBOkxBooks
+from crypto_market_monitor.bot_commands import BotCommands, BotTelegramAPI
+from crypto_market_monitor.bot_queue import BotNotificationService
+from crypto_market_monitor.bot_templates import format_bot
+from crypto_market_monitor.market_data.bot_okx_books import BotOkxBooks
 from crypto_market_monitor.market_data.funding_stream import FundingStream
 from crypto_market_monitor.market_data.models import MarketKind
 from crypto_market_monitor.market_data.risk_session import RiskSession
@@ -52,9 +55,7 @@ async def serve(
         force=True,
         format="%(asctime)sZ %(levelname)s %(message)s",
         handlers=[
-            RotatingFileHandler(
-                logs / "bot-b.log", maxBytes=512000, backupCount=2, encoding="utf-8"
-            ),
+            RotatingFileHandler(logs / "bot.log", maxBytes=512000, backupCount=2, encoding="utf-8"),
             logging.StreamHandler(),
         ],
     )
@@ -63,20 +64,18 @@ async def serve(
     loop = asyncio.get_running_loop()
     for signum in (signal.SIGINT, signal.SIGTERM):
         signal.signal(signum, lambda *_: loop.call_soon_threadsafe(stopped.set))
-    api_type = (
-        BotBTelegramAPI if config.reliability and config.reliability.commands else TelegramAPI
-    )
+    api_type = BotTelegramAPI if config.reliability and config.reliability.commands else TelegramAPI
     api = api_type.from_env(bot="B") if telegram else None
     if api:
         await api.verify()
     args = (data / "bot-b.sqlite3", api.send_html if api else None)
     if config.reliability:
-        service = BotBNotificationService(
+        service = BotNotificationService(
             *args, route=api.route if api else "injected-sender", policy=config.reliability
         )
     else:
         service = NotificationService(
-            *args, route=api.route if api else "injected-sender", formatter=format_bot_b
+            *args, route=api.route if api else "injected-sender", formatter=format_bot
         )
     watcher = RiskWatch(service.outbox, config, data_notifications=data_notifications)
     adapter = None
@@ -88,7 +87,7 @@ async def serve(
         if api and config.reliability and not once:
             service.start()
             if config.reliability.commands:
-                commands = BotBCommands(api, watcher, root)
+                commands = BotCommands(api, watcher, root)
                 commands.start()
         derivatives = config.basis is not None or config.funding is not None
         adapter, instruments = await build_compact_okx(config.symbols, derivatives=derivatives)
@@ -136,16 +135,16 @@ async def serve(
                 ):
                     break
                 await asyncio.sleep(0.2)
-        scanner = BotBOkxBooks(adapter, instruments, max_age_ms=config.max_age_ms)
-        logging.info("Bot B started; explicit market-risk rules, compact markets, no broker")
+        scanner = BotOkxBooks(adapter, instruments, max_age_ms=config.max_age_ms)
+        logging.info("Bot started; explicit market-risk rules, compact markets, no broker")
         cycles = 0
         next_metadata = loop.time() + 21600
         metadata_failures = 0
         while not stopped.is_set():
             if commands and commands.task.done():
-                raise ValueError("Bot B polling owner unavailable; restart safely")
+                raise ValueError("Bot polling owner unavailable; restart safely")
             if service.task and service.task.done():
-                raise ValueError("Bot B notification worker unavailable; restart safely")
+                raise ValueError("Bot notification worker unavailable; restart safely")
             began = loop.time()
             if began >= next_metadata:
                 refreshed = await refresh_compact_okx_safely(
@@ -221,11 +220,11 @@ async def serve(
         if not once:
             atomic_json(root / "health.json", {"status": "stopped", "updated_ms": now_ms()})
         notify("STOPPING=1")
-        logging.info("Bot B stopped")
+        logging.info("Bot stopped")
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Opt-in BTC/ETH price alerts; Bot B only")
+    parser = argparse.ArgumentParser(description="Opt-in BTC/ETH price alerts; Bot only")
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--state-dir", type=Path, required=True)
     parser.add_argument("--once", action="store_true")
@@ -255,7 +254,7 @@ def main() -> None:
     except Exception:
         parser.exit(
             1,
-            "Bot B unavailable; check config, data freshness, state or network (redacted).\n",
+            "Bot unavailable; check config, data freshness, state or network (redacted).\n",
         )
 
 
